@@ -1,0 +1,55 @@
+{
+ "note": "英语思维规律 (read-only reference; tag 批改 notes with the number).",
+ "rows": [
+  {
+   "ex": "Not yet, but it's on my radar.",
+   "n": "①",
+   "rule": "先回答问题，再解释"
+  },
+  {
+   "ex": "Could you…? · I'd like… · I'd stick with…",
+   "n": "②",
+   "rule": "用 would / could / might 让语气变软"
+  },
+  {
+   "ex": "I'd go with screenshots, because…",
+   "n": "③",
+   "rule": "别把自己说小：少用 just / only / sorry"
+  },
+  {
+   "ex": "That's a fair point, but…",
+   "n": "④",
+   "rule": "先认可对方，再说不同意见"
+  },
+  {
+   "ex": "In my experience… · It's usually…",
+   "n": "⑤",
+   "rule": "别说绝对的话"
+  },
+  {
+   "ex": "I'll send it today.",
+   "n": "⑥",
+   "rule": "结尾补一句下一步"
+  },
+  {
+   "ex": "Pretty good! I tried a new café. How about you?",
+   "n": "⑦",
+   "rule": "闲聊时多给一点信息，再反问对方"
+  },
+  {
+   "ex": "Thanks, that's really kind!",
+   "n": "⑧",
+   "rule": "被夸就大方接受"
+  },
+  {
+   "ex": "I'm not sure that works for me. · I'll think about it.",
+   "n": "⑨",
+   "rule": "委婉地说不"
+  },
+  {
+   "ex": "I'm still working on it. · It broke yesterday.",
+   "n": "⑩",
+   "rule": "主语和时态说完整"
+  }
+ ]
+}

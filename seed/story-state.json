@@ -1,0 +1,57 @@
+{
+ "bossScores": [],
+ "characters": {},
+ "company": "{{FILL: fictional company}}",
+ "act": 1,
+ "episode": 0,
+ "arc": "{{FILL: story plan: rounds / projects, ~2 weeks per act}}",
+ "discarded": [],
+ "drillBoiler": "Start when I say \"Start\".\n\nI will tell you the case \"{case}\" three times, each time faster and shorter: about 90 seconds, then 60, then 40. After each round, ask me one short follow-up question from your role, and wait for my answer. Do not correct me while I am telling the case. If I get stuck, wait. If I say \"Help\" or speak Chinese, give me the English I need and let me continue.\n\nAfter the third round, give me: 1) what got clearer from round 1 to round 3, 2) the two or three most useful corrections, 3) three sentences of mine that could sound more natural, with your version. Now just reply \"Ready\" and wait for me to say \"Start\".",
+ "drillLog": [],
+ "evalCases": [],
+ "focusLog": [],
+ "focusPool": [
+  "先说结论，原因放后面，重点放最后",
+  "时间和地点放在句子后面",
+  "长修饰放在名词后面",
+  "程度词、频率词放在动词前面",
+  "动词后面直接接宾语，不要在中间插别的词",
+  "否定放在助动词后面（don't / didn't / can't）",
+  "疑问句把 Do / Did / Can 放在最前面",
+  "先说“我做了什么”，再说结果",
+  "比较时先说对象，再用 than 说差别",
+  "先说主句，再用 because / so / but 补充"
+ ],
+ "jade": "{{FILL: who the learner is, in English}}",
+ "listenLast": null,
+ "log": [],
+ "nextHook": "{{FILL}}",
+ "note": "episode stays 0 until the learner has studied the pending episode.",
+ "pending": null,
+ "portfolio": [
+  {
+   "name": "{{FILL}}",
+   "role": "{{FILL: the learner's real role}}",
+   "what": "{{FILL}}",
+   "zh": "{{FILL}}"
+  }
+ ],
+ "standing": {
+  "chances": [],
+  "concerns": [],
+  "round": "",
+  "signals": []
+ },
+ "teacherNotes": [
+  "Prompts must have one clear answer. Before writing a card, check that no other natural expression, especially any chunk in bank/phrases, fits the plain sentence or situation just as well (e.g. \"a short talk on Monday\" fits both touch base and hop on a quick call); if it does, rewrite the prompt or pick another chunk. Never put two similar expressions (same job, same scene, or near-synonyms) in one day's cards, new chunks and usage card: move one to tomorrow (due tomorrow, level unchanged). (learner, 2026-11-04)",
+  "Do not pre-book reviews. After writing the lesson, leave 复习次数 and 下次复习 of the rows on today's cards as they are, and never move a row to 已掌握 at that point. Apply +1 and the new due date (1 → +3 days, 2 → +7, 3 → +20, 4 → 已掌握) only in the next run's step A, and only for cards she answered got; fuzzy, miss and no result follow the existing A table. New-chunk rows (复习次数 0, due tomorrow) and same-job clash moves (due tomorrow) are still written at once. (learner, 2026-11-05)",
+  "Feedback must say exactly which words were not natural and why (what they mean to a native, or which word natives use and the difference); never a vague one-line verdict. If the words are not wrong but only mean something different, say so honestly instead of calling them unnatural. This applies to 批改, card notes and the in-page checker (checker prompt edited 2026-11-06). (learner, 2026-11-06)",
+  "A chunk is its core words only. Words after the core (a preposition, how/what/whether, bracket parts, the rest of the example sentence) may vary when natural English; do not require the exact sample wording in cards, hints or the checker. Write chunk text so the core is clear (e.g. It depends on…, not only It depends on how…). (learner, 2026-11-06)",
+  "The checker uses its own judgment in the moment; do not list special cases or limit prepositions / how / what. If the core words of the learner's chunk are used correctly and nothing around them sounds unnatural, it counts as got, including same-meaning variants (e.g. Thanks vs Thank you) and different words after the core. A different natural expression stays 换了个说法, never a mistake. (learner, 2026-11-06)",
+  "Any question of hers that compares 2–3 natural forms with different meanings (e.g. made / did / put up) is type A: answer in the table format and save it to 答疑本 in the SAME turn, even when it comes up through a card note. (learner, 2026-11-06)"
+ ],
+ "topicLog": [],
+ "usedClips": [],
+ "voiceBoiler": "Start the conversation when I say \"Start\".\n\nRules: Speak simple, natural English in short turns of one to three sentences. Wait for me after each turn. If I make a small mistake, repeat my idea back in correct, natural English inside your reply and keep going. Stop to correct me only if the mistake changes the meaning or keeps repeating. If I say \"Help\" or speak Chinese, give me the English I need and let me try again. Do not use the phrases below yourself before I do, but make chances for me to use them: {chunks}\n\nAfter about 10 turns, end the role-play kindly. Then give me: 1) the two or three most useful corrections, 2) three sentences of mine that could sound more natural, with your version, 3) which of the phrases above I did not use. Now just reply \"Ready\" and wait for me to say \"Start\".",
+ "weeklyTopic": "What did you do this week, and what are you planning for next week?"
+}

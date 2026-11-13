@@ -1,0 +1,5 @@
+{
+ "note": "Source of truth for the phrase bank (main table). level = 复习次数; due = 下次复习 (YYYY-MM-DD). Newest first. 已掌握 rows are in 'mastered'.",
+ "rows": [],
+ "mastered": []
+}

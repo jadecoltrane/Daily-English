@@ -1,0 +1,4 @@
+dist/
+config.json
+exports/
+*.local.json

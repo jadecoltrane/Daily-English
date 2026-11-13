@@ -1,0 +1,205 @@
+{
+ "date": "2026-01-02",
+ "label": "Fri 2 Jan",
+ "scene": "社交",
+ "answers": {},
+ "done": {},
+ "results": {},
+ "typed": {},
+ "cards": [
+  {
+   "key": "k1",
+   "chunk": "It wasn't part of my brief.",
+   "level": 0,
+   "stage": "gap",
+   "prompt": "Your manager says: \"Thanks for fixing the typos too!\" You reply: \"No problem. It wasn't part of my ____, but I saw them.\"",
+   "hint": "任务书里没有这一项，是你多做的。",
+   "answer": "brief (It wasn't part of my brief.)",
+   "example": "It wasn't part of my brief, but the icons looked wrong, so I fixed them too."
+  },
+  {
+   "key": "k2",
+   "chunk": "Can't complain.",
+   "level": 1,
+   "stage": "use",
+   "prompt": "A neighbour asks: \"How is the new job?\" It is going fine. You want to say: \"Everything is fine, and I have nothing negative to tell you.\" Say the same thing the way a native would. →",
+   "hint": "A casual two-word reply.",
+   "answer": "Can't complain. It's busy, but it's good.",
+   "example": "\"How's work these days?\" \"Busy, but can't complain.\""
+  },
+  {
+   "key": "u1",
+   "kind": "usage",
+   "step": 1,
+   "chunk": "Can I…? / Could I…?",
+   "form": "Could I…?",
+   "rule": "都对，看客气程度：小事、跟熟人用 Can I；请人帮忙、对方职位高用 Could I",
+   "rows": [
+    {
+     "form": "Can I…?",
+     "when": "小事、日常、跟熟人",
+     "ex": "Can I get a latte, please?"
+    },
+    {
+     "form": "Could I…?",
+     "when": "请人帮忙、占用对方时间",
+     "ex": "Could I ask a quick question about the role?"
+    }
+   ],
+   "myCase": "咖啡店点单 → Can I；面试里追问 → Could I",
+   "stage": "use",
+   "prompt": "You want to photograph your director's whiteboard before she cleans it. →",
+   "hint": "Use the softer, more polite form for someone senior.",
+   "answer": "Could I take a photo of the whiteboard before you clean it?",
+   "example": "Could I ask a quick question about the role?"
+  }
+ ],
+ "lesson": {
+  "paused": false,
+  "chunks": [
+   {
+    "chunk": "✍️ I chose this one because…",
+    "meaning": "I picked this one for this reason.",
+    "zh": "我选这个，是因为……",
+    "example": "I chose this one because the problem was easy to explain."
+   },
+   {
+    "chunk": "It's been one of those weeks.",
+    "meaning": "This week was busy and a bit hard.",
+    "zh": "这周真是一言难尽",
+    "example": "Three meetings moved and a late deadline. It's been one of those weeks.",
+    "why": "those 是“那种”；one of those weeks 就是“又是那种什么都赶在一起的一周”（常见说法）。"
+   }
+  ],
+  "quick": [
+   {
+    "chunk": "✍️ I chose this one because…",
+    "prompt": "Ella asks: \"Why did you pick that restaurant?\" You say: \"I ____ this one because it has vegetarian dishes.\"",
+    "answer": "chose (I chose this one because…)"
+   },
+   {
+    "chunk": "It's been one of those weeks.",
+    "prompt": "Mia says: \"Rough week?\" You say: \"Yes, it's been one of ____ weeks!\"",
+    "answer": "those (It's been one of those weeks.)"
+   }
+  ],
+  "situation": "It is four o'clock on Friday, and your Teams call with Sam is about to start.",
+  "story": {
+   "episode": 1,
+   "title": "The first call",
+   "recap": "(first episode: no recap)",
+   "teaser": "After the call, Sam decides what happens next."
+  },
+  "dialogue": [
+   {
+    "narr": "At four on Friday, you join the Teams call. Sam, the Design Director, is already there."
+   },
+   {
+    "line": "Hi! How's your Friday going?",
+    "who": "Sam"
+   },
+   {
+    "line": "Pretty good. **It's been one of those weeks**, but I'm glad to be here.",
+    "who": "Alex"
+   },
+   {
+    "line": "Why did you pick this project to show me?",
+    "who": "Sam"
+   },
+   {
+    "line": "**I chose this one because** it's my latest work.",
+    "who": "Alex"
+   },
+   {
+    "narr": "Sam smiles and writes something down."
+   }
+  ],
+  "practice": [
+   {
+    "scene": "Sam moves on to the project itself.",
+    "who": "Sam",
+    "cue": "How did you start the project, and what was hard?",
+    "task": "Explain how you started and what was hard.",
+    "hint": "I started with · the hardest part · so",
+    "reference": "I started with a list of problems. The hardest part was getting everyone to agree, so I made a short summary."
+   },
+   {
+    "scene": "Sam looks at the clock.",
+    "who": "Sam",
+    "cue": "We have ten minutes. Would you rather go through one detail, or the whole project quickly?",
+    "task": "Decide and explain why.",
+    "hint": "I'd go with · because · then",
+    "reference": "I'd go with one detail, because it shows how I think. Then I can show the rest quickly."
+   }
+  ],
+  "fix": {
+   "from": "",
+   "items": []
+  },
+  "listen": {
+   "title": "(a video title)",
+   "source": "Nielsen Norman Group",
+   "length": "2 分钟",
+   "url": "https://www.nngroup.com/videos/",
+   "zh": "(two Chinese sentences taken from the page description)",
+   "focus": [
+    "(gist question 1)",
+    "(gist question 2)"
+   ]
+  },
+  "talk": {
+   "topic": "What is one thing you learned this week? Talk for about 90 seconds."
+  },
+  "think": {
+   "focus": "先说结论，原因放后面，重点放最后",
+   "tip": "中文常先说原因；英语先说结论，再用 because 补充。",
+   "facts": {
+    "prompt": "Priya asks: \"Can we move the call to three?\" Use these facts: can't · at three · a design review · can join at four.",
+    "keys": [
+     "can't",
+     "at three",
+     "a design review",
+     "can join at four"
+    ],
+    "hint": "Say no first. Put the new time last.",
+    "ref": "I can't join at three, because I have a design review. I can join at four.",
+    "note": "先说结论，再说原因，重点放句尾。"
+   },
+   "quick": {
+    "prompt": "Sam asks: \"Want to come to the team lunch?\" You have a deadline. Say no first, then why.",
+    "hint": "Say no first.",
+    "ref": "Sorry, I can't. I have a deadline at one.",
+    "note": "先回答，再说原因。"
+   },
+   "extra": {
+    "kind": "around",
+    "thing": "反复纠结",
+    "prompt": "Last week you chose blue for a poster. Now you wonder every day if green would be better. Tell Mia. →",
+    "hint": "keep asking · right colour",
+    "word": "second-guess",
+    "ref": "I keep asking myself if I chose the right colour.",
+    "note": "想不起单词时，描述现象。"
+   },
+   "picture": {
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#1f2937\"/><rect x=\"20\" y=\"15\" width=\"320\" height=\"190\" rx=\"12\" fill=\"#0f172a\" stroke=\"#475569\" stroke-width=\"3\"/><text x=\"36\" y=\"42\" font-size=\"15\" fill=\"#e5e7eb\" font-family=\"sans-serif\">Climate</text><circle cx=\"70\" cy=\"115\" r=\"24\" fill=\"#334155\"/><text x=\"62\" y=\"126\" font-size=\"32\" fill=\"#ffffff\" font-family=\"sans-serif\">-</text><text x=\"118\" y=\"132\" font-size=\"52\" fill=\"#ffffff\" font-family=\"sans-serif\">22°</text><circle cx=\"262\" cy=\"115\" r=\"24\" fill=\"#334155\"/><text x=\"253\" y=\"126\" font-size=\"30\" fill=\"#ffffff\" font-family=\"sans-serif\">+</text></svg>",
+    "prompt": "Look at this car screen. Where is the temperature? →",
+    "hint": "middle · left · right",
+    "ref": "The big number 22° is in the middle. There is a minus button on its left and a plus button on its right.",
+    "note": "先说最显眼的东西，再说位置。"
+   }
+  },
+  "voice": {
+   "who": "Sam · 设计总监",
+   "scene": "你和 Sam 在周五下午的 Teams 通话里先寒暄，再讲你的项目。",
+   "goals": [
+    "先回答问题，再解释",
+    "用上今天的表达"
+   ],
+   "chunks": [
+    "I chose this one because…",
+    "Can't complain."
+   ],
+   "prompt": "Let's do a spoken English role-play.\n\nYou are Sam, a design director at a car company. We are on a Teams call. Ask me why I chose my project.\n\nStart the conversation when I say \"Start\".\n\nRules: Speak simple, natural English in short turns of one to three sentences. Wait for me after each turn. If I make a small mistake, repeat my idea back in correct, natural English inside your reply and keep going. Stop to correct me only if the mistake changes the meaning or keeps repeating. If I say \"Help\" or speak Chinese, give me the English I need and let me try again. Do not use the phrases below yourself before I do, but make chances for me to use them: I chose this one because…; Can't complain.\n\nAfter about 10 turns, end the role-play kindly. Then give me: 1) the two or three most useful corrections, 2) three sentences of mine that could sound more natural, with your version, 3) which of the phrases above I did not use. Now just reply \"Ready\" and wait for me to say \"Start\"."
+  }
+ }
+}

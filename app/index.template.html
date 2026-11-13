@@ -1,0 +1,1283 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>{{LEARNER}}'s Review Cards</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: one calm card per step. Concept: a clean study notebook — white paper, cobalt ink for actions, a lemon highlighter on the chunks you're learning. Hierarchy: 1) what you act on (ink, large) 2) the target chunk (highlighted) 3) support text (muted, small). */
+:root{
+  --bg:#F5F6F8; --surface:#FFFFFF; --surface-2:#F1F3F6; --ink:#15171C; --muted:#636976; --faint:#A7ACB6; --line:rgba(21,23,28,.10);
+  --accent:#2E5BEA; --accent-soft:#EAF0FF; --accent-line:rgba(46,91,234,.35); --on-accent:#FFFFFF;
+  --hl:#FFE45C; --me:#EAF0FF;
+  --btn:#15171C; --on-btn:#FFFFFF;
+  --got:#1F9D63; --miss:#EF6351;
+  --bar:rgba(245,246,248,.86); --shadow:0 1px 2px rgba(21,23,28,.04),0 8px 28px rgba(21,23,28,.06);
+  --f-ui:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue","PingFang SC","Noto Sans SC",system-ui,sans-serif;
+  --f-zh:-apple-system,BlinkMacSystemFont,"PingFang SC","Noto Sans SC","Microsoft YaHei",system-ui,sans-serif;
+  --f-mono:ui-monospace,"SF Mono",Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#111318; --surface:#1A1D23; --surface-2:#232731; --ink:#EEF0F4; --muted:#9BA1AD; --faint:#6E7480; --line:rgba(238,240,244,.10);
+  --accent:#8AA6FF; --accent-soft:rgba(138,166,255,.14); --accent-line:rgba(138,166,255,.40); --on-accent:#111318;
+  --hl:rgba(255,214,10,.30); --me:rgba(138,166,255,.16);
+  --btn:#EEF0F4; --on-btn:#111318;
+  --got:#4CC48A; --miss:#FF8A7A;
+  --bar:rgba(17,19,24,.86); --shadow:none; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#111318; --surface:#1A1D23; --surface-2:#232731; --ink:#EEF0F4; --muted:#9BA1AD; --faint:#6E7480; --line:rgba(238,240,244,.10);
+  --accent:#8AA6FF; --accent-soft:rgba(138,166,255,.14); --accent-line:rgba(138,166,255,.40); --on-accent:#111318;
+  --hl:rgba(255,214,10,.30); --me:rgba(138,166,255,.16);
+  --btn:#EEF0F4; --on-btn:#111318;
+  --got:#4CC48A; --miss:#FF8A7A;
+  --bar:rgba(17,19,24,.86); --shadow:none; color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-ui);font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.wrap{max-width:820px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 56px;display:flex;flex-direction:column;gap:14px}
+header{display:flex;flex-direction:column;gap:2px;padding-inline:4px}
+.eyebrow{font-size:13px;font-weight:600;color:var(--muted);font-variant-numeric:tabular-nums}
+h1{font:700 26px/1.2 var(--f-zh);letter-spacing:-.01em;margin:0;text-wrap:balance}
+h2{font:600 13px var(--f-zh);color:var(--muted);letter-spacing:.06em;margin:0}
+h3{font:600 12px var(--f-zh);margin:0;color:var(--muted);letter-spacing:.06em}
+.days{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.day{font:600 12px var(--f-ui);font-variant-numeric:tabular-nums;padding:4px 10px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer}
+.day{position:relative}
+.day.full{color:var(--got);border-color:var(--got)}
+.day.full::after{content:"★";position:absolute;top:-7px;right:-6px;width:15px;height:15px;border-radius:50%;background:var(--got);color:#fff;font-size:9px;line-height:15px;text-align:center;box-shadow:0 0 0 2px var(--bg)}
+.day[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.steps{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;padding:4px;margin-inline:-4px;border-radius:14px;background:var(--bar);-webkit-backdrop-filter:saturate(160%) blur(18px);backdrop-filter:saturate(160%) blur(18px)}
+.steps::-webkit-scrollbar{display:none}
+.step{flex:0 0 auto;display:flex;align-items:center;gap:6px;font:500 14px var(--f-zh);padding:7px 12px;border-radius:10px;border:0;background:transparent;color:var(--muted);cursor:pointer}
+.step .n{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;border:1px solid var(--line);color:var(--muted);font:600 11px var(--f-ui);font-variant-numeric:tabular-nums}
+.step.done .n{background:var(--line);border-color:transparent;color:var(--ink)}
+.step[aria-current="step"]{background:var(--surface);color:var(--ink);font-weight:600;box-shadow:var(--shadow)}
+.step[aria-current="step"] .n{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.panel{background:var(--surface);border-radius:20px;padding:22px 20px 24px;display:flex;flex-direction:column;gap:20px;min-width:0;box-shadow:var(--shadow)}
+.zh{font-family:var(--f-zh)}
+.gauge{display:flex;align-items:center;gap:12px}
+.ticks{flex:1;display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:3px;height:4px}
+.tick{height:4px;border-radius:2px;background:var(--line)}
+.tick.got{background:var(--got)} .tick.miss{background:var(--miss)}
+/* Apple page-control feel: every segment is the same thin capsule; the current one stretches wider and turns label-dark. No outline, no extra colour. */
+.ticks{display:flex;gap:4px}
+.tick{flex:1 1 0;min-width:0;height:4px;border-radius:999px;transition:flex-grow .45s cubic-bezier(.32,.72,0,1),background-color .3s}
+.tick.cur{flex-grow:2;background:var(--faint)}
+.tick.cur.got{background:var(--got)} .tick.cur.miss{background:var(--miss)} .tick.cur.fuzzy{background:#E7A93B}
+.ticks{padding-block:5px;height:auto;align-items:center}
+.count{font:600 13px var(--f-ui);color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.card{display:flex;flex-direction:column;gap:16px;min-height:220px}
+.prompt{font-family:var(--f-zh);font-size:21px;line-height:1.5;font-weight:600}
+.hint{font-size:14px;color:var(--muted)}
+.answer{display:flex;flex-direction:column;gap:6px;background:var(--surface-2);border-radius:14px;padding:16px}
+.chunk{font-size:21px;font-weight:700;color:var(--ink);line-height:1.3;align-self:flex-start}
+.chunk,.hrow>.chunk{display:inline;background:linear-gradient(transparent 58%,var(--hl) 58%,var(--hl) 92%,transparent 92%);-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.chunkBox{min-width:0;line-height:1.3}
+.sent{font-size:19px;font-weight:600;line-height:1.5}
+.sent .hl{background:linear-gradient(transparent 58%,var(--hl) 58%,var(--hl) 92%,transparent 92%);-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.ex{color:var(--muted);font-size:15px}
+.actions{display:flex;gap:8px;flex-wrap:nowrap;margin-top:auto}
+.actions button{flex:1 1 0;min-width:0;padding:11px 4px;font-size:15px;white-space:nowrap}
+.actions .primary{flex:1.3 1 0}
+button{font:500 16px var(--f-ui);border-radius:12px;padding:11px 16px;cursor:pointer;border:1px solid transparent;transition:transform .12s,background .2s}
+button:active{transform:scale(.98)}
+button:focus-visible,.day:focus-visible,.step:focus-visible,textarea:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.primary{background:var(--accent);color:var(--on-accent);border-color:var(--accent);font-weight:600;flex:1}
+.primary:hover{filter:brightness(1.06)}
+.got-btn,.miss-btn{background:transparent;color:var(--ink);border-color:var(--line);flex:1}
+.got-btn:hover,.miss-btn:hover,.ghost:hover{background:var(--surface-2)}
+.ghost{background:transparent;color:var(--muted);border-color:var(--line)}
+.small{padding:6px 12px;font-size:14px;border-radius:999px;align-self:flex-start;color:var(--ink);border-color:var(--line);background:transparent}
+.status{font-size:12px;font-weight:600;padding:3px 9px;border-radius:999px;align-self:flex-start;border:1px solid var(--line);color:var(--muted)}
+.status.got{color:var(--got)} .status.miss{color:var(--miss)}
+ul.plain{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+/* learn step */
+.story{display:flex;flex-direction:column;gap:4px}
+.story .ep{font:700 24px/1.25 var(--f-ui);color:var(--ink);letter-spacing:-.01em;margin-bottom:4px}
+.recap{font-size:16px;line-height:1.65}
+.scene{font-family:var(--f-zh);font-size:14px;color:var(--muted);line-height:1.6;text-align:center;padding:4px 8px}
+.scene+.dlg{margin-top:-14px}
+.scene+.dlg>.narr.in:first-child{padding-top:0}
+.chunks{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.chunkItem{display:flex;flex-direction:column;gap:3px;padding:14px 0;border-bottom:1px solid var(--line)}
+.chunkItem .chunk{font-size:19px}
+.mean{font-size:15px}
+.zhs{font-family:var(--f-zh);font-size:13px;color:var(--muted)}
+.dlg{display:flex;flex-direction:column;gap:10px}
+.bub{display:flex;flex-direction:column;gap:3px;max-width:86%;align-self:flex-start;min-width:0}
+.bub.me{align-self:flex-end;align-items:flex-end}
+.bub.ctx .line,.bub.ctx.me .line{background:transparent;color:var(--muted);border:1px solid var(--line)}
+.bub.ctx .line strong,.bub.ctx.me .line strong{color:var(--muted);background:none}
+.who{font:600 12px var(--f-ui);color:var(--muted);padding-inline:4px}
+.line{min-width:0;background:transparent;border:1px solid var(--line);border-radius:16px 16px 16px 4px;padding:10px 14px;font-size:16px;line-height:1.5}
+.bub.me .line{background:var(--me);border-color:transparent;color:var(--ink);border-radius:16px 16px 4px 16px}
+.line strong{color:var(--ink);font-weight:700;background:linear-gradient(transparent 58%,var(--hl) 58%,var(--hl) 92%,transparent 92%);-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.think{font-family:var(--f-zh);font-size:14px;color:var(--muted)}
+.teaser{font-family:var(--f-zh);font-size:14px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+/* practice: the conversation continues, your turn */
+.turnNote{font-family:var(--f-zh);font-size:14px;color:var(--muted)}
+.pr{display:flex;flex-direction:column;gap:8px}
+.pr+.pr{border-top:1px solid var(--line);padding-top:18px}
+.task{font-size:14px;color:var(--muted);padding-inline:4px}
+.myturn{align-self:flex-end;width:88%;display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.myturn textarea{border:1.5px dashed var(--faint);background:transparent;border-radius:16px 16px 4px 16px;min-height:92px}
+.ref{align-self:flex-end;max-width:88%;background:var(--me);color:var(--ink);border-radius:16px 16px 4px 16px;padding:10px 14px;font-size:16px}
+.ref b{color:var(--muted);font:600 12px var(--f-zh);display:block;margin-bottom:2px}
+textarea{width:100%;box-sizing:border-box;min-height:88px;font:16px/1.5 var(--f-ui);color:var(--ink);background:var(--surface-2);border:0;border-radius:14px;padding:12px 14px;resize:vertical}
+textarea::placeholder{color:var(--faint)}
+textarea.big{min-height:150px}
+.row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.note{font-size:14px;color:var(--muted)}
+.vbrief{display:flex;flex-direction:column;gap:8px;background:var(--accent-soft);border-radius:14px;padding:14px 16px;font-family:var(--f-zh)}.vwho{font-weight:700;font-size:16px}.vscene{font-size:15px;line-height:1.6}.vlab{font-size:13px;color:var(--muted);margin-top:4px}.vgoals{margin:0;padding-left:20px;font-size:15px;line-height:1.6}.vchips{display:flex;flex-wrap:wrap;gap:6px}.vchip{font:500 14px var(--f-ui);background:var(--surface);border-radius:999px;padding:4px 10px}.vnote{font-size:13px;color:var(--muted);line-height:1.5;margin-top:4px}.vhow{margin-top:14px;font-size:15px;color:var(--muted)}.vdet{margin-top:10px}.vdet summary{cursor:pointer;font:14px var(--f-zh);color:var(--muted);margin-bottom:8px}
+pre.voice{margin:0;white-space:pre-wrap;word-break:break-word;font:14px/1.6 var(--f-mono);background:var(--surface-2);border-radius:14px;padding:16px;max-height:320px;overflow:auto}
+.cmp{display:flex;flex-direction:column;gap:6px}
+.cmp .mine{color:var(--muted);padding:2px 0;white-space:pre-line}
+.cmp .better{background:var(--surface-2);border-radius:14px;padding:12px 14px;white-space:pre-line}
+.news{display:flex;flex-direction:column;margin:0;padding:0;list-style:none;border-top:1px solid var(--line)}
+.news li{display:flex;flex-direction:column;gap:2px;padding:16px 0;border-bottom:1px solid var(--line)}
+.news strong{font-size:16px;line-height:1.4}
+.news a{color:var(--accent);text-decoration:none}
+.news .why{font-size:15px;line-height:1.65;margin-top:8px;color:var(--ink)}
+.nav{display:flex;gap:10px}
+.nav .primary,.nav .ghost{border-radius:999px}
+.nav .primary{background:var(--surface);color:var(--ink);border-color:var(--line);box-shadow:var(--shadow)}
+.empty{background:var(--surface);border-radius:20px;padding:28px 22px;color:var(--muted);box-shadow:var(--shadow)}
+#gNote{text-align:center}
+.play{display:inline-grid;place-items:center;width:32px;height:32px;padding:0;border-radius:50%;font-size:12px;flex:0 0 auto;background:transparent;color:var(--muted);border:1px solid var(--line)}
+.play.wide{width:auto;padding:6px 12px;border-radius:999px;font-size:14px;gap:6px;display:inline-flex;align-items:center}
+.hrow{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.hrow>:first-child{min-width:0}
+.tip{font-family:var(--f-zh);font-size:14px;color:var(--muted);background:var(--surface-2);border-radius:12px;padding:10px 12px}
+.tipBtn{align-self:flex-start;padding:4px 10px;font-size:13px;border-radius:999px;background:transparent;color:var(--muted);border:1px solid var(--line)}
+.cue{display:flex;flex-direction:column;gap:3px;max-width:88%}
+.stage{align-self:flex-start;font:600 12px var(--f-zh);padding:3px 9px;border-radius:999px;background:var(--accent-soft);color:var(--accent)}
+.bank{display:flex;flex-direction:column;gap:8px}
+.bank .lbl{font:600 12px var(--f-zh);color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chipw{font-size:15px;padding:5px 11px;border-radius:999px;background:var(--surface-2)}
+.chipw.used{color:var(--faint);text-decoration:line-through;background:transparent}
+.blank{display:inline-block;min-width:3.2em;border-bottom:2px solid var(--accent);margin:0 2px;line-height:1.1}
+.useTag{color:var(--ink);font-weight:700;background:linear-gradient(transparent 58%,var(--hl) 58%,var(--hl) 92%,transparent 92%)}
+
+.sec{display:flex;flex-direction:column;gap:14px;min-width:0}
+.sec+.sec{border-top:1px solid var(--line);padding-top:22px}
+.secHead{display:flex;align-items:center;gap:10px}
+.secNum{flex:0 0 auto;display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font:700 12px var(--f-ui)}
+.secTitle{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;font:700 18px/1.3 var(--f-zh)}
+.secSub{font:500 13px var(--f-zh);color:var(--muted)}
+.fixCard{display:flex;flex-direction:column;gap:10px;background:var(--surface-2);border-radius:14px;padding:14px 16px}
+.fixCue{display:flex;gap:8px;align-items:flex-start;font-size:14px;line-height:1.45;color:var(--muted)}
+.fixNo{flex:0 0 auto;display:inline-grid;place-items:center;width:20px;height:20px;border-radius:6px;background:var(--surface);color:var(--ink);font:600 12px var(--f-ui)}
+.fixRow{display:flex;flex-direction:column;gap:3px}
+.fixLbl{font:600 11px var(--f-zh);letter-spacing:.06em;color:var(--muted)}
+.fixRow.mine .fixTxt{color:var(--muted);font-size:15px}
+.fixRow.better .fixLbl{color:var(--got)}
+.fixRow.better .fixTxt{font-size:16px;font-weight:600;line-height:1.5;color:var(--ink);border-left:3px solid var(--got);padding-left:10px}
+.fixNote{font-size:14px;line-height:1.6;color:var(--ink)}
+.fixNotes{font-size:14px;color:var(--muted)}
+.tag{align-self:flex-start;font:600 11px var(--f-zh);padding:2px 8px;border-radius:999px;background:var(--surface-2);color:var(--muted)}
+.tag.mineTag{background:var(--accent-soft);color:var(--accent)}
+.mission{font-size:17px;line-height:1.6}
+.bossBox{display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--line);padding-top:16px}
+input.score{width:90px;font:16px/1.5 var(--f-ui);color:var(--ink);background:var(--surface-2);border:0;border-radius:12px;padding:10px 12px}
+.prLabel{align-self:flex-start;font:600 12px var(--f-zh);padding:3px 9px;border-radius:999px;background:var(--accent-soft);color:var(--accent)}
+.tip .useB{color:var(--ink);background:linear-gradient(transparent 58%,var(--hl) 58%,var(--hl) 92%,transparent 92%);-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.cover{display:inline;font:inherit;font-weight:600;color:var(--muted);letter-spacing:.04em;background:var(--surface);border:0;border-radius:6px;padding:0 4px;margin:0 1px;cursor:pointer;-webkit-box-decoration-break:clone;box-decoration-break:clone;transform:none}
+.cover:hover{background:var(--muted)}
+.cs{-webkit-box-decoration-break:clone;box-decoration-break:clone;text-align:inherit;font:inherit;font-weight:700;color:var(--ink);background:linear-gradient(transparent 58%,var(--hl) 58%,var(--hl) 92%,transparent 92%);border:0;border-bottom:1.5px dashed var(--accent);border-radius:0;padding:0;margin:0;cursor:pointer;transform:none;display:inline;line-height:inherit;-webkit-tap-highlight-color:transparent}
+.cs.on{border-bottom-style:solid}
+.pop{display:flex;flex-direction:column;gap:3px;margin-top:6px;background:var(--surface);border:1px solid var(--accent-line);border-radius:14px;padding:12px 14px;max-width:100%;text-align:left;align-self:stretch}
+.pop .chunk{font-size:17px}
+.cont .pr+.pr,.cont .pr{border-top:0;padding-top:0}
+.narr{font-family:var(--f-zh);font-size:14px;line-height:1.6;color:var(--muted);text-align:center;padding:10px 8px 4px;margin-top:6px;border-top:1px dashed var(--line)}
+.narr.in{border-top:0;margin-top:0;padding:4px 8px}
+.tick.fuzzy{background:#E7A93B}
+.fuzzy-btn{background:transparent;color:var(--ink);border-color:var(--line);flex:1}
+.fuzzy-btn:hover{background:var(--surface-2)}
+.status.fuzzy{color:#C98A1B}
+textarea.say{min-height:56px;font-size:16px}
+.said{font-size:15px;color:var(--muted);display:flex;flex-direction:column;gap:2px}
+.said b{font:600 12px var(--f-zh)}
+.cs.rv{background:linear-gradient(transparent 58%,rgba(76,196,138,.35) 58%,rgba(76,196,138,.35) 92%,transparent 92%);border-bottom-color:var(--got)}
+.pop.rv{border-color:rgba(76,196,138,.5)}
+.pop.rv .chunk{background:linear-gradient(transparent 58%,rgba(76,196,138,.35) 58%,rgba(76,196,138,.35) 92%,transparent 92%)}
+input.typein::placeholder,input.score::placeholder{color:var(--faint)}
+input.typein{width:100%;box-sizing:border-box;font:16px/1.5 var(--f-ui);color:var(--ink);background:var(--surface-2);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px}
+input.typein:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.letters{font:600 22px/1.5 var(--f-mono);letter-spacing:.06em;color:var(--accent);word-break:break-word}
+.result{display:flex;flex-direction:column;gap:4px;border-radius:12px;padding:10px 14px;background:var(--surface-2)}
+.result b{font:700 16px var(--f-zh)}
+.result.got b{color:var(--got)} .result.miss b{color:var(--miss)} .result.fuzzy b{color:#C98A1B}
+.listen{display:flex;flex-direction:column;gap:12px}
+.ltitle{font:700 19px/1.35 var(--f-ui)}
+.listen .src{font-size:13px;color:var(--muted)}
+.listen a.open{align-self:flex-start;text-decoration:none;font:600 15px var(--f-zh);padding:9px 14px;border-radius:999px;background:var(--accent);color:var(--on-accent)}
+.shadow{display:flex;flex-direction:column;gap:8px;margin:0;padding:0;list-style:none}
+.shadow li{background:var(--surface-2);border-radius:12px;padding:10px 14px;font-size:16px;line-height:1.5}
+.pline{display:flex;flex-direction:column;gap:4px}.pen{font-size:17px;line-height:1.6}.pen .stress{color:var(--accent);font-weight:700}.pen .pause{color:var(--faint);font-weight:600}.pen .link{color:var(--accent)}.pzh{font-family:var(--f-zh);font-size:14px;color:var(--muted)}.plegend{font-family:var(--f-zh);font-size:13px;color:var(--muted)}
+.ltimer{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--surface-2);border-radius:12px;padding:8px 8px 8px 14px}.ltleft{font-family:var(--f-zh);font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}.ltleft.over{color:var(--got);font-weight:600}
+.bub.live .line{border-color:var(--accent-line)}
+.small-row{justify-content:flex-end;gap:8px}
+.myturn .send,.myturn .tipBtn{align-self:flex-end}
+.mtbar{display:flex;justify-content:flex-end;align-items:center;gap:8px;flex-wrap:wrap}
+.tmrow{display:flex;align-items:center;justify-content:space-between;gap:10px;font:500 13px var(--f-zh);color:var(--muted);background:var(--surface-2);border-radius:12px;padding:8px 12px;margin-top:6px}
+.mtbar .cd{margin-right:auto;font:600 14px var(--f-ui);font-variant-numeric:tabular-nums;color:var(--muted)}
+.mtbar .cd.urgent{color:var(--miss)}
+.mtbar .tip{padding:6px 14px;font-size:14px;line-height:1.4;border-radius:999px;margin:0;max-width:100%}
+.mtbar .tipBtn,.mtbar .send{padding:6px 14px;font-size:14px;line-height:1.4;border-radius:999px;border:1px solid var(--line)}
+.qbox{display:flex;flex-direction:column}
+.qitem{display:flex;flex-direction:column;gap:6px;padding:16px 0;border-bottom:1px solid var(--line)}
+.qitem:last-child{border-bottom:0;padding-bottom:0}
+.qitem .qctx{font-size:14px;line-height:1.5;color:var(--muted)}
+.qitem .qsent{font-size:18px;line-height:1.9;font-weight:600;color:var(--ink)}
+.qblank{display:inline-block;max-width:100%;font:inherit;font-weight:600;color:var(--accent);background:var(--accent-soft);border:0;border-bottom:2px solid var(--accent);border-radius:6px 6px 0 0;padding:1px 6px;margin:0 3px;text-align:center;outline:none;vertical-align:baseline;line-height:1.35}
+.qblank:focus{background:var(--surface-2)}
+.qword{padding:1px 6px;margin:0 3px;border-radius:6px}
+.qword.got{color:var(--got);background:rgba(76,196,138,.14)}
+.qword.fuzzy{color:#C98A1B;background:rgba(231,169,59,.16)}
+.qword.miss{color:var(--miss);background:rgba(239,99,81,.12)}
+.qact{display:flex;justify-content:flex-end;align-items:center;gap:6px;flex-wrap:wrap}
+.qact.done{justify-content:flex-start;gap:8px}
+.qgo{padding:6px 18px;font-size:14px;font-weight:600;border-radius:999px;background:var(--accent);color:var(--on-accent);border:0}
+.qlink{padding:6px 10px;font-size:14px;border-radius:999px;background:transparent;color:var(--muted);border:0}
+.qlink:hover{background:var(--surface-2)}
+.qmsg{font-size:14px;font-weight:600}
+.qmsg.got{color:var(--got)} .qmsg.fuzzy{color:#C98A1B} .qmsg.miss{color:var(--miss)}
+.qfull{font-size:14px;color:var(--muted)}
+.qfull::before{content:"· "}
+.actions .wide{flex:1;color:var(--ink)}
+.qbox{display:flex;flex-direction:column;gap:12px}
+.qcard{display:flex;flex-direction:column;gap:10px;background:var(--surface-2);border-radius:14px;padding:14px 16px}
+.qctx{font-size:14px;line-height:1.5;color:var(--muted)}
+.qsent{font-size:18px;line-height:1.5;font-weight:600;color:var(--ink)}
+.qrow{display:flex;gap:8px;align-items:stretch}
+.qrow .typein{flex:1;min-width:0;width:auto;font-size:16px;padding:9px 12px;border-radius:10px;background:var(--surface)}
+.qbtn{flex:0 0 auto;padding:8px 14px;font-size:14px;border-radius:10px;white-space:nowrap}
+.qrow .qbtn.primary{flex:0 0 auto}
+.qcard .answer{background:var(--surface);padding:12px 14px}
+.qcard .actions{margin-top:0}
+a.vopen{display:inline-flex;align-items:center;text-decoration:none;font:600 16px var(--f-zh);padding:11px 18px;border-radius:12px;background:var(--accent);color:var(--on-accent)}
+.talkTimer{font:600 15px var(--f-zh);color:var(--muted);font-variant-numeric:tabular-nums}.talkTimer.over{color:var(--got)}
+.whyx{font-family:var(--f-zh);font-size:14px;line-height:1.6;color:var(--ink);border-left:3px solid var(--hl);padding:2px 0 2px 10px;margin-top:4px}
+@media (min-width:760px){.steps{margin-inline:0}.step{flex:1 1 0;justify-content:center;white-space:nowrap}.panel{padding:30px 36px 34px}.prompt{font-size:23px}.bub{max-width:78%}.myturn{width:80%}}
+.qaBtn{align-self:flex-start;margin-top:10px;font:600 13px var(--f-zh);padding:5px 12px;border-radius:999px;border:1px solid var(--accent-line);background:var(--accent-soft);color:var(--accent);cursor:pointer}
+.qaBtn[aria-pressed="true"]{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.qaList{display:flex;flex-direction:column;gap:14px}
+.qaItem{background:var(--surface);border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:14px;box-shadow:var(--shadow);min-width:0}
+.qaQ{font:700 18px/1.4 var(--f-zh)}
+.qaAsk{font:14px/1.5 var(--f-zh);color:var(--muted)}
+.qaCase{font:15px/1.65 var(--f-zh);background:var(--accent-soft);border-radius:12px;padding:10px 14px}
+.qaCase b{color:var(--accent)}
+.qaUse{display:flex;flex-direction:column;gap:8px;border-top:1px dashed var(--line);padding-top:12px}
+.qaDate{font:600 12px var(--f-ui);color:var(--muted);font-variant-numeric:tabular-nums}
+.qaA{font:15px/1.7 var(--f-zh)}
+.qaRows{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.qaRow{display:grid;grid-template-columns:minmax(0,9em) minmax(0,1fr);gap:4px 14px;padding:10px 0;border-bottom:1px solid var(--line)}
+.qaRow .f{font-weight:700;background:linear-gradient(transparent 58%,var(--hl) 58%,var(--hl) 92%,transparent 92%);align-self:start;justify-self:start}
+.qaRow .w{font:14px/1.5 var(--f-zh);color:var(--muted)}
+.qaRow .e{grid-column:2;font-size:15px;font-style:italic}
+.qaQuiz{display:flex;flex-direction:column;gap:10px;background:var(--surface-2);border-radius:14px;padding:14px 16px}
+.qaQuiz .qsent{font-size:17px}
+.qaOpts{display:flex;flex-wrap:wrap;gap:8px}
+.qaOpt{padding:7px 14px;font-size:15px;border-radius:999px;background:var(--surface);color:var(--ink);border:1px solid var(--line)}
+.qaOpt.right{border-color:var(--got);color:var(--got);font-weight:700}
+.qaOpt.wrong{border-color:var(--miss);color:var(--miss)}
+@media (max-width:480px){.qaRow{grid-template-columns:1fr}.qaRow .e{grid-column:1}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}button:active{transform:none}}
+.eyerow{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.bankBtn{margin:0}
+#bankView{display:block;margin-top:4px}
+.bkt{display:flex;gap:6px;flex-wrap:wrap}
+.bkq{width:100%;box-sizing:border-box;margin:10px 0;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font:16px var(--f-ui)}
+.bkl{display:flex;flex-direction:column;gap:8px}
+.bk{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;box-shadow:var(--shadow)}
+.bkdue{border-left:3px solid var(--accent)}
+.bkc{font:700 17px var(--f-ui)}
+.bkz{font:14px var(--f-zh);color:var(--muted);margin-top:2px}
+.bke{margin-top:6px;font-size:15px}
+.bkm{margin-top:6px;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyerow"><span class="eyebrow" id="eyebrow">Daily English</span><button class="day bankBtn" id="bankBtn" type="button">表达库</button></div>
+    <h1 id="title">今日学习</h1>
+    <div class="days" id="days" role="group" aria-label="选择日期"></div>
+  </header>
+
+  <div id="empty" class="empty">正在加载今天的学习内容……每天早上 8 点简报发出后，这里会按顺序出现当天的复习和练习。</div>
+
+  <nav class="steps" id="steps" aria-label="学习步骤" hidden></nav>
+  <section class="panel" id="panel" hidden></section>
+  <div class="nav" id="nav" hidden>
+    <button class="ghost" id="prevBtn">上一步</button>
+    <button class="primary" id="nextBtn">下一步</button>
+  </div>
+  <span class="note" id="gNote" role="status"></span>
+  <section id="bankView" hidden></section>
+</div>
+
+<script>
+(function(){
+  const $=id=>document.getElementById(id);
+  let db=null, days=[], curId=null, step=0, idx=0, revealed=false, shown={};
+  const learnerName="{{LEARNER}}";
+  const isLearner=who=>String(who||"").trim().toLowerCase()===learnerName.trim().toLowerCase();
+  const el=(tag,cls,txt)=>{
+    if(tag==="div"&&cls==="chunk"){ const w=document.createElement("div"); w.className="chunkBox"; const s=document.createElement("span"); s.className="chunk"; if(txt!=null) s.textContent=txt; w.appendChild(s); return w; }
+    const e=document.createElement(tag); if(cls) e.className=cls; if(txt!=null) e.textContent=txt; return e;};
+  const btn=(txt,cls,fn)=>{const b=el("button",cls,txt); b.type="button"; b.onclick=fn; return b;};
+  // "**bold**" markers → <strong>, built from text nodes only
+  function rich(parent,s){String(s||"").split("**").forEach((part,i)=>{ if(!part) return; if(i%2){parent.appendChild(el("strong",null,part));} else parent.appendChild(document.createTextNode(part)); }); return parent;}
+
+  // read-aloud with the browser's built-in voice (hidden where unsupported)
+  const canSpeak=false; // read-aloud turned off at the learner's request
+  // rank the device's English voices: neural/premium first, then US, then other English
+  function voiceScore(v){let sc=0; const n=v.name||"";
+    if(/natural|neural|premium|enhanced|online/i.test(n)) sc+=100;
+    if(/Ava|Zoe|Evan|Nathan|Noelle|Samantha|Allison|Aria|Jenny|Emma|Andrew|Brian|Google US/i.test(n)) sc+=20;
+    if(/^en[-_]US/i.test(v.lang)) sc+=10; else if(/^en[-_](GB|AU|CA|IE)/i.test(v.lang)) sc+=5;
+    if(/compact|eloquence|novelty|bad news|bells|bubbles|cellos|jester|organ|trinoids|whisper|zarvox|albert|fred|junior|ralph|superstar|wobble|boing|bahh|good news|grandma|grandpa|rocko|shelley|sandy|reed|flo|eddy/i.test(n)) sc-=200;
+    return sc;}
+  function englishVoices(){try{return speechSynthesis.getVoices().filter(v=>/^en/i.test(v.lang)).sort((a,b)=>voiceScore(b)-voiceScore(a));}catch(e){return [];}}
+  const voiceName=null;
+  function chosenVoice(){const vs=englishVoices(); return vs.find(v=>v.name===voiceName)||vs[0]||null;}
+  const rate=0.92;
+  function utter(t){const u=new SpeechSynthesisUtterance(String(t).replace(/\*\*/g,"")); const v=chosenVoice(); if(v){u.voice=v; u.lang=v.lang;} else u.lang="en-US"; u.rate=rate; return u;}
+
+  function speak(list){ if(!canSpeak) return; try{speechSynthesis.cancel(); [].concat(list).forEach(t=>{ if(t) speechSynthesis.speak(utter(t)); });}catch(e){} }
+  function play(text,label){ const b=btn(label||"▶",label?"play wide":"play",()=>speak(text)); b.setAttribute("aria-label","朗读"); if(!canSpeak) b.hidden=true; return b; }
+  function whyNode(o){ return o&&o.why? el("div","whyx","💡 为什么这么说："+o.why) : null; }
+  function addWhy(box,o){ const w=whyNode(o); if(w) box.appendChild(w); if(o&&o.vs&&o.vs.length){ const v=el("div","whyx"); v.style.borderLeftColor="var(--faint)"; v.appendChild(el("div",null,"🔀 易混的表达")); o.vs.forEach(x=>{ const r=el("div"); r.appendChild(el("b",null,String(x.chunk||""))); r.appendChild(document.createTextNode("：" +String(x.when||""))); v.appendChild(r); }); box.appendChild(v); } }
+  // Chinese stays folded: a small “中文” button reveals it, so she reads the English first
+  function zhFold(box,key,text,cls){ if(!text) return; if(shown["zh-"+key]) box.appendChild(el("div",cls||"zhs",text)); else { const b=btn("中文","tipBtn",()=>{shown["zh-"+key]=true; render();}); b.style.alignSelf="flex-start"; b.style.padding="2px 8px"; b.style.fontSize="12px"; box.appendChild(b); } }
+  function tipToggle(box,text,key){ if(!text) return; const t=el("div","tip",text); t.hidden=!(key&&shown["tipopen-"+key]); const b=btn(t.hidden?"提示":"收起提示","tipBtn",()=>{t.hidden=!t.hidden; b.textContent=t.hidden?"提示":"收起提示"; if(key) shown["tipopen-"+key]=!t.hidden;}); box.appendChild(b); box.appendChild(t); }
+  function cur(){return days.find(d=>d.id===curId)}
+  function stepsFor(d){
+    const L=d.lesson||null, s=[{id:"review",name:"Review"}];
+    if(L){
+      const mineC=(L.chunks||[]).some(c=>/^✍/.test(c.chunk||"")), sceneC=(L.chunks||[]).some(c=>!/^✍/.test(c.chunk||""));
+      if((L.fix&&((L.fix.items&&L.fix.items.length)||L.fix.better))||mineC) s.push({id:"fix",name:"Feedback"});
+      if((L.dialogue&&L.dialogue.length)||(L.exchange&&L.exchange.length)||(L.practice&&L.practice.length)||sceneC) s.push({id:"story",name:"Story"});
+    }
+    if(L&&L.think&&((L.think.read&&L.think.read.sentence)||(L.think.build&&L.think.build.start)||(L.think.extra&&L.think.extra.prompt)||(L.think.picture&&L.think.picture.svg))) s.push({id:"think",name:"Drills"});
+    if(L&&L.mission&&L.mission.task) s.push({id:"mission",name:"Mission"});
+    if(d.task) s.push({id:"write",name:"Writing"});
+    if(L&&L.listen&&L.listen.url) s.push({id:"listen",name:"Listening"});
+    if(L&&L.voice) s.push({id:"voice",name:"Speaking"});
+    return s;
+  }
+  function firstOpen(){
+    const c=cur(); if(!c) return 0; const r=c.data.results||{};
+    const i=(c.data.cards||[]).findIndex(k=>!r[k.key]); return i<0?(c.data.cards||[]).length:i;
+  }
+  function selectDay(id){ if(bankOpen) closeBank(true); curId=id; idx=firstOpen(); revealed=false; shown={}; const c=cur(); const st=stepsFor(c.data); const done=(c.data.done)||{}; const f=st.findIndex(x=>!done[x.id]); step=f<0?0:f; render();}
+
+  function renderDays(){
+    const box=$("days"); box.textContent="";
+    const wk=s=>{const t=new Date(s+"T12:00:00"); t.setDate(t.getDate()-((t.getDay()+6)%7)); return t.getFullYear()+"-"+t.getMonth()+"-"+t.getDate();};
+    const thisWk=days.length?wk(days[0].id):"";
+    days.filter(d=>wk(d.id)===thisWk).reverse().forEach(d=>{
+      const st=stepsFor(d.data||{}), dn=(d.data&&d.data.done)||{}, full=st.length>0&&st.every(s=>dn[s.id]);
+      const b=el("button","day"+(full?" full":""),["Sun","Mon","Tue","Wed","Thu","Fri","Sat"][new Date(d.id+"T12:00:00").getDay()]); b.title=d.id+(full?" · done":""); b.type="button"; b.setAttribute("aria-pressed",d.id===curId?"true":"false");
+      b.onclick=()=>selectDay(d.id); box.appendChild(b);
+    });
+  }
+  function render(){
+    if(bankOpen) return;
+    const c=cur();
+    if(!c){ $("empty").hidden=false; ["steps","panel","nav"].forEach(i=>$(i).hidden=true); return; }
+    $("empty").hidden=true; ["steps","panel","nav"].forEach(i=>$(i).hidden=false);
+    renderDays();
+    const d=c.data, st=stepsFor(d), done=d.done||{};
+    if(step>=st.length) step=st.length-1;
+    $("eyebrow").textContent=(d.label||c.id)+" · Daily English"; $("title").textContent=sceneEn(d.scene);
+    const sb=$("steps"); sb.textContent="";
+    st.forEach((s,i)=>{
+      const b=el("button","step"+(done[s.id]?" done":"")); b.type="button";
+      b.appendChild(el("span","n",String(i+1))); b.appendChild(el("span",null,s.name+(done[s.id]?" ✓":"")));
+      if(i===step) b.setAttribute("aria-current","step");
+      b.onclick=()=>{step=i; render(); scrollTop();}; sb.appendChild(b);
+    });
+    const p=$("panel"); p.textContent="";
+    const s=st[step];
+    ({review:renderReview,think:renderThink,listen:renderListen,story:renderStory,write:renderWrite,voice:renderVoice,mission:renderMission,talk:renderTalk,fix:renderFix,news:renderNews})[s.id](p,d,c);
+    $("prevBtn").hidden=step===0;
+    $("nextBtn").textContent=step===st.length-1?"完成今天的学习":"完成，下一步";
+  }
+  // header in English: the lesson data keeps its Chinese scene names, the page shows them in English
+  function sceneEn(s){ s=String(s||"").trim(); if(!s) return "Today";
+    const M={"作品集":"Portfolio","设计评审":"Design review","职场沟通":"Work chat","邮件和 Teams":"Email & Teams","面试":"Interview","讲经历":"Telling your story","会议":"Meetings","应对追问":"Handling follow-ups","社交":"Small talk","日常生活":"Daily life","工作":"Work","weekly quiz":"Weekly quiz"};
+    return s.split(/\s*[·+]\s*/).map(x=>M[x]||x).join(" · "); }
+  function scrollTop(){try{window.scrollTo({top:0,behavior:"smooth"});}catch(e){}}
+
+  // 1. review cards
+  function renderReview(p,d){
+    p.appendChild(el("h2",null,"复习卡片"));
+    if(d.lesson&&d.lesson.paused&&d.lesson.pausedNote) p.appendChild(el("div","note zh",d.lesson.pausedNote));
+    const cards=d.cards||[], r=d.results||{};
+    if(!cards.length){p.appendChild(el("div","prompt","今天没有要复习的表达 ✅")); return;}
+    const g=el("div","gauge"), t=el("div","ticks"); t.setAttribute("aria-hidden","true");
+    cards.forEach((k,i)=>t.appendChild(el("span","tick"+(r[k.key]==="got"?" got":r[k.key]==="miss"?" miss":r[k.key]==="fuzzy"?" fuzzy":(i===idx?" now":""))+(i===idx&&idx<cards.length?" cur":""))));
+    g.appendChild(t); g.appendChild(el("span","count",cards.filter(k=>r[k.key]).length+" / "+cards.length)); p.appendChild(g);
+    const card=el("div","card"); p.appendChild(card);
+    if(idx>=cards.length){
+      const got=cards.filter(k=>r[k.key]==="got"), miss=cards.filter(k=>r[k.key]==="miss"), fz=cards.filter(k=>r[k.key]==="fuzzy");
+      const isOther=k=>(((d.typed||{})[k.key]||{}).fz==="other"), fzO=fz.filter(isOther), fzC=fz.filter(k=>!isOther(k));
+      card.appendChild(el("div","prompt","复习完了：记得 "+got.length+" 个，差一点 "+fzC.length+" 个，换了说法 "+fzO.length+" 个，忘了 "+miss.length+" 个。"));
+      const lst=miss.concat(fz);
+      if(lst.length){card.appendChild(el("div","hint","忘了的降一级，差一点和换了说法的不升级，明天都会再考一次：")); const ul=el("ul","plain"); lst.forEach(k=>ul.appendChild(el("li",null,k.chunk))); card.appendChild(ul);}
+      const a=el("div","actions"); a.appendChild(btn("上一张","ghost wide",()=>{idx=cards.length-1; revealed=false; render();})); a.appendChild(btn("从头再过一遍","ghost wide",()=>{idx=0; revealed=false; render();})); card.appendChild(a);
+      return;
+    }
+    const k=cards[idx];
+    if(r[k.key]&&!revealed){ renderDone(card,k,cards,r,d); return; }
+    renderPrompt(card,k,cards,r);
+    if(!revealed){ if((Number(k.level)===2||k.kind==="usage")&&k.hint) card.appendChild(el("div","tip",k.hint)); else tipToggle(card,k.hint,k.key); }
+    else if(k.hint&&((Number(k.level)===2||k.kind==="usage")||shown["tipopen-"+k.key])) card.appendChild(el("div","tip",k.hint));
+    if(r[k.key]) card.appendChild(el("span","status "+r[k.key],({got:"记得",fuzzy:(((d.typed||{})[k.key]||{}).fz==="other"?"换了个说法":"差一点"),miss:"忘了"})[r[k.key]]||""));
+    const a=el("div","actions");
+    const typed=(k.stage==="cue"||k.stage==="gap"), chk=shown["chk-"+k.key];
+    if(k.stage==="choice"){
+      if(!revealed){
+        card.appendChild(el("div","hint","选出这个场合里意思对的那一个。"));
+        const o=el("div","qaOpts"); (k.options||[]).forEach(op=>o.appendChild(btn(op,"qaOpt",()=>{ const g=op===k.form?"got":"miss"; shown["chk-"+k.key]={typed:op,grade:g}; saveResult(k.key,g,{text:op}); revealed=true; render(); }))); card.appendChild(o);
+        if(idx>0) a.appendChild(btn("上一张","ghost",()=>{idx--; revealed=false; render();}));
+      } else {
+        const c2=shown["chk-"+k.key]||{}; const res=el("div","result "+c2.grade); res.appendChild(el("b",null,c2.grade==="got"?"✓ 选对了":"这里应该用 "+k.form)); if(c2.typed) res.appendChild(el("div","said","你选的："+c2.typed)); card.appendChild(res);
+        const ans=el("div","answer"); ans.appendChild(el("span","fixLbl","参考说法")); ans.appendChild(answerNode(k)); card.appendChild(ans); usageTable(card,k);
+        a.appendChild(btn("下一张","primary",()=>{ delete shown["chk-"+k.key]; mark(k.key,c2.grade,{text:c2.typed||""}); }));
+      }
+      card.appendChild(a); return;
+    }
+    if(!revealed){
+      card.appendChild(el("div","hint",(k.kind==="usage"&&k.ukind==="rule")?"句子里有一个语法错误：找出来，把整句改对打出来。打完点检查，AI 会看你改对没有。":({cue:"看首字母，把整个表达打出来，打完点检查。",gap:"把空格里的词打出来，打完点检查。",use:"回想一个学过的表达，用它回一句。打出来点检查，AI 会看你有没有用上、说得自不自然。",match:"从表达库里挑出合适的一个，用英文把整句说出来，再翻开看答案。"})[k.stage]||"先用英文大声说出来，再翻开看答案。"));
+      if(typed){
+        const inp=el("input","typein"); inp.type="text"; inp.autocomplete="off"; inp.autocapitalize="off"; inp.spellcheck=false; inp.placeholder=k.stage==="cue"?"打出整个表达……":"打出缺的词……"; inp.value=shown["say-"+k.key]||""; inp.oninput=()=>{shown["say-"+k.key]=inp.value;}; inp.setAttribute("aria-label","你的答案");
+        const go=()=>{const v=inp.value.trim(); if(!v){inp.focus(); return;} shown["say-"+k.key]=v; shown["chk-"+k.key]={typed:v,grade:gradeTyped(v,k)}; saveResult(k.key,shown["chk-"+k.key].grade,{text:v}); revealed=true; render();};
+        inp.onkeydown=e=>{if(e.key==="Enter"){e.preventDefault(); go();}};
+        card.appendChild(inp);
+        a.appendChild(btn("检查","primary",go));
+        a.appendChild(btn("想不起来","ghost",()=>{shown["chk-"+k.key]={typed:"",grade:"miss"}; saveResult(k.key,"miss",{text:""}); revealed=true; render();}));
+        setTimeout(()=>{try{inp.focus({preventScroll:true});}catch(e){}},0);
+      } else {
+        const sayBox=el("textarea","say"); sayBox.placeholder="先大声说一句，或在这里打出来……"; sayBox.value=shown["say-"+k.key]||""; sayBox.oninput=()=>{shown["say-"+k.key]=sayBox.value;}; sayBox.setAttribute("aria-label","先说出来再看答案"); card.appendChild(sayBox);
+        const goAI=()=>{ const v=sayBox.value.trim(); shown["say-"+k.key]=sayBox.value; if(!v){ sayBox.focus(); return; } revealed=true; if(sampleFn){ shown["ai-"+k.key]={pending:true}; render(); aiCheck(k,v); } else { delete shown["ai-"+k.key]; render(); } };
+        a.appendChild(btn("检查","primary",goAI));
+        a.appendChild(btn("想不起来","ghost",()=>{ shown["say-"+k.key]=""; shown["ai-"+k.key]={verdict:"miss",better:"",note:""}; saveResult(k.key,"miss",{text:""}); revealed=true; render();}));
+      }
+      if(idx>0) a.appendChild(btn("上一张","ghost",()=>{idx--; revealed=false; render();}));
+      if(idx<cards.length-1) a.appendChild(btn("下一张","ghost",()=>{idx++; revealed=false; render();}));
+    }else if(typed&&chk){
+      const gl={got:"✓ 对了",fuzzy:"差一点（拼写小错）",miss:"✗ 不对"}[chk.grade];
+      const res=el("div","result "+chk.grade); res.appendChild(el("b",null,gl));
+      if(chk.typed){ const y=el("div","said"); y.appendChild(el("span",null,"你打的："+chk.typed)); res.appendChild(y); }
+      card.appendChild(res);
+      const ans=el("div","answer"); const hr=el("div","hrow"); hr.appendChild(el("div","chunk",k.stage==="gap"?String(k.answer||""):String(k.answer||""))); ans.appendChild(hr); addWhy(ans,k); card.appendChild(ans);
+      a.appendChild(btn("下一张","primary",()=>{delete shown["chk-"+k.key]; mark(k.key,chk.grade,{text:chk.typed||""});}));
+      if(idx>0) a.appendChild(btn("上一张","ghost",()=>{ idx--; revealed=false; render();}));
+    }else if(k.stage==="use"&&shown["ai-"+k.key]&&!shown["ai-"+k.key].fail){
+      const R=shown["ai-"+k.key], said=String(shown["say-"+k.key]||"").trim();
+      if(R.pending){ const res=el("div","result"); res.appendChild(el("b",null,"正在检查你的句子……")); res.appendChild(el("div","said","你写的："+said)); card.appendChild(res); card.appendChild(a); return; }
+      const res=el("div","result "+R.verdict); const isRule=k.kind==="usage"&&k.ukind==="rule"; res.appendChild(el("b",null,{got:isRule?"✓ 改对了":"✓ 用对了",fuzzy:isRule?"差一点":(R.fz==="other"?"换了个说法":"差一点"),miss:said?(isRule?"错误还在，看一下正确的句子":k.kind==="usage"?"这里应该用 "+String(k.form||""):"今天要练的是："+String(k.chunk||"").replace(/^✍️?\s*/,"")):"没想起来，看一下答案"}[R.verdict]));
+      if(said) res.appendChild(el("div","said","你写的："+said)); card.appendChild(res);
+      const row=(lbl,t)=>{ const b=el("div","fixRow better"); b.appendChild(el("span","fixLbl",lbl)); b.appendChild(el("div","fixTxt",t)); card.appendChild(b); };
+      { const one=R.better||R.mine; if(R.fz==="other"&&R.mine&&!sameT(R.mine,said)&&!nearSame(R.mine,one)) row("你的说法 · 改得更自然",R.mine); if(one&&!sameT(one,said)){ if(!nearSame(one,k.answer)) row("更地道的表达",one); } else addSmallFix(card,said,one); }
+      if(R.note) card.appendChild(el("div","fixNote zh",R.note));
+      const ans=el("div","answer"); ans.appendChild(el("span","fixLbl","参考说法")); const hr=el("div","hrow"); hr.appendChild(answerNode(k)); ans.appendChild(hr); addWhy(ans,k); card.appendChild(ans); usageTable(card,k);
+      a.appendChild(btn("下一张","primary",()=>{ delete shown["ai-"+k.key]; mark(k.key,R.verdict,{text:said,mine:R.mine||"",better:R.better||"",note:R.note||""});}));
+      if(idx>0) a.appendChild(btn("上一张","ghost",()=>{ idx--; revealed=false; render();}));
+    }else{
+      const said=String(shown["say-"+k.key]||"").trim(); if(said){ const m=el("div","said"); m.appendChild(el("b",null,"你说的")); m.appendChild(el("span",null,said)); card.appendChild(m); }
+      const ans=el("div","answer"); const hr=el("div","hrow"); hr.appendChild(answerNode(k)); hr.appendChild(play([k.answer])); ans.appendChild(hr); addWhy(ans,k); card.appendChild(ans); usageTable(card,k);
+      a.appendChild(btn("忘了","miss-btn",()=>mark(k.key,"miss",{text:String(shown["say-"+k.key]||"").trim()})));
+      a.appendChild(btn("模糊","fuzzy-btn",()=>mark(k.key,"fuzzy",{text:String(shown["say-"+k.key]||"").trim()})));
+      a.appendChild(btn("记得","got-btn",()=>mark(k.key,"got",{text:String(shown["say-"+k.key]||"").trim()})));
+      if(idx>0) a.appendChild(btn("上一张","ghost",()=>{ idx--; revealed=false; render();}));
+    }
+    card.appendChild(a);
+  }
+  // a card she already answered: her saved answer, the feedback and the right answer, then just navigation
+  function renderDone(card,k,cards,r,d){
+    renderPrompt(card,k,cards,r);
+    if(k.hint) card.appendChild(el("div","tip",k.hint));
+    const T=((d.typed||{})[k.key])||{}, g=r[k.key];
+    const res=el("div","result "+g); res.appendChild(el("b",null,{got:"✓ 记得",fuzzy:T.fz==="other"?"换了个说法":"差一点",miss:"✗ 忘了"}[g]||""));
+    res.appendChild(el("div","said",T.text?"你打的："+T.text:(g==="miss"?"你当时没想起来":"（这张没有记录你打的答案）"))); card.appendChild(res);
+    const row=(lbl,t)=>{ const b=el("div","fixRow better"); b.appendChild(el("span","fixLbl",lbl)); b.appendChild(el("div","fixTxt",t)); card.appendChild(b); };
+    { const one=T.better||T.mine; if(T.fz==="other"&&T.mine&&!sameT(T.mine,T.text)&&!nearSame(T.mine,one)) row("你的说法 · 改得更自然",T.mine); if(one&&!sameT(one,T.text)){ if(!nearSame(one,k.answer)) row("更地道的表达",one); } else addSmallFix(card,T.text,one); }
+    if(T.note) card.appendChild(el("div","fixNote zh",T.note));
+    const ans=el("div","answer"); ans.appendChild(el("span","fixLbl",k.stage==="use"||k.stage==="choice"?"参考说法":"正确说法")); const hr=el("div","hrow"); hr.appendChild(answerNode(k)); ans.appendChild(hr); addWhy(ans,k); card.appendChild(ans); usageTable(card,k);
+    const a=el("div","actions");
+    if(idx>0) a.appendChild(btn("上一张","ghost wide",()=>{idx--; revealed=false; render();}));
+    a.appendChild(btn(idx<cards.length-1?"下一张":"看总结","primary",()=>{idx++; revealed=false; render();}));
+    card.appendChild(a);
+  }
+  // 自己说: Claude checks whether she used the target chunk and whether her sentence is natural
+  async function aiCheck(k,v){
+    const sit=String(k.prompt||"").replace(/\s*→\s*$/,"");
+    const prompt=(k.kind==="usage"&&k.ukind==="rule")?["You are checking one answer from {{LEARNER}}, {{ROLE}} (about {{LEVEL}}). This is a CORRECTION card: the sentence in the task contains exactly ONE grammar error that breaks a rule (only one form is correct). She had to find it and type the whole sentence corrected.",
+      "Task: "+sit,"The rule: "+String(k.rule||""),"Correct sentence: "+String(k.answer||""),"{{LEARNER}} wrote: \""+v+"\"",
+      "verdict: \"got\" = she fixed that error correctly and added no new error (other natural rewordings are fine; ignore capitals and punctuation); \"fuzzy\" = she fixed that error but added a new grammar mistake, or her fix is only partly right; \"miss\" = the error is still there, she changed something else instead, or the answer is empty.",
+      "mine = HER sentence with every error fixed, keeping her wording (= her sentence if already right). better = the correct sentence. note = 1–2 short sentences in simple Chinese: where the error was, the rule in a few words, and (if she missed it) what she changed instead. Never use the word 错 about her; say 这里要… instead.",
+      "Reply with ONLY a JSON object, no other text: {\"verdict\":\"got\"|\"fuzzy\"|\"miss\",\"fz\":\"close\"|\"\",\"mine\":\"...\",\"better\":\"...\",\"note\":\"...\"}"].join("\n\n"):k.kind==="usage"?["You are checking one answer from {{LEARNER}}, {{ROLE}} (about {{LEVEL}}). This is a USAGE card: the forms "+String(k.chunk||"")+" are all natural English, but only one fits this situation. Judge whether she chose the right FORM for the situation, not whether she used a fixed phrase.",
+      "Situation: "+sit,"How to choose: "+String(k.rule||""),"Right form here: "+String(k.form||""),"Sample answer: "+String(k.answer||""),"{{LEARNER}} wrote: \""+v+"\"",
+      "verdict: \"got\" = she used the right form and the sentence is natural; grammar or wording slips that have nothing to do with the form being tested (e.g. a missing article elsewhere) must NOT lower the verdict; \"fuzzy\" = right form but the problem is in how she built that form itself (e.g. a wrong tense or auxiliary inside it), or she avoided all the forms with another natural sentence that still fits; \"miss\" = she used a form that changes the meaning here (e.g. a firm plan where it should be a hypothesis), or the answer is empty or off-task.",
+      "mine = HER sentence corrected into natural English with the right form, keeping her meaning and wording as far as possible (= her sentence if already right). better = a natural native version for this situation. note = 1–2 short sentences in simple Chinese: what she did well, then which form fits here and WHY, tied to this situation. If she used a wrong form, say plainly that it is good English but means something else here; never call it wrong English.",
+      "fz (only when verdict is \"fuzzy\", else \"\"): \"close\" = she used the target (form or expression) but with a clear grammar or wording problem — she almost has it; \"other\" = natural English that does the task with a different expression or form instead of the target — the target did not come to mind.",
+      "Reply with ONLY a JSON object, no other text: {\"verdict\":\"got\"|\"fuzzy\"|\"miss\",\"fz\":\"close\"|\"other\"|\"\",\"mine\":\"...\",\"better\":\"...\",\"note\":\"...\"}"].join("\n\n"):["You are checking one answer from {{LEARNER}}, {{ROLE}} (about {{LEVEL}}) practising natural spoken English. She was given a situation and had to recall and use an expression she learned earlier.",
+      "Situation: "+sit,"Target expression: "+String(k.chunk||""),"Sample answer: "+String(k.answer||""),"{{LEARNER}} wrote: \""+v+"\"",
+      "Decide: (1) Did she use the target expression? Natural changes of form count (tense, pronoun, contraction, filling a placeholder such as A/B or '…'). Only the CORE words of the target matter (for example 'It depends on how…' = 'It depends on'); she does not need to repeat the sample sentence. Use your own judgment: if the core of the target is used correctly and nothing around it sounds unnatural, the verdict is 'got', even when she changes the words after the core (a preposition, how / what / whether) or uses a same-meaning variant (for example Thanks instead of Thank you). Only count it as a problem inside the target when the core itself is wrong or a changed word makes the sentence unnatural, and then the note must say why. (2) Is her sentence correct, natural English that a native speaker would really say here?",
+      "verdict: \"got\" = she used the target expression correctly and naturally. Grade ONLY the target expression: any grammar, article, word-order or wording problem elsewhere in her sentence that is NOT part of the target expression (e.g. a missing \"the\", a wrong tense in another part, a detail she left out) must NOT lower the verdict, it stays \"got\"; \"fuzzy\" = EITHER she used the target expression (or most of it) but the problem is INSIDE the target expression itself (a wrong or missing word in it, a preposition or form within it that a native would not use there (a different but natural preposition or question word is fine), a misspelling of it), OR her sentence is natural, correct English that does the task but uses a different expression instead of the target (never \"miss\" for a natural answer); \"miss\" = she did not use the target expression AND her sentence is empty, off-task, or not natural English.",
+      "mine = HER OWN sentence corrected into natural English that a native speaker would say here, keeping her meaning and as much of her wording as still sounds natural, and NOT forcing the target expression in. Naturalness comes first: if a word or phrase of hers is awkward or does not fit (e.g. a wrong preposition, or an extra place phrase like 'in the chat'), replace it or simply drop it instead of patching it into an odd construction; shorter is fine. Before replying, reread mine and better as a native speaker would and make sure every preposition and collocation is one a native really uses (if her sentence is already natural, mine = her sentence exactly). better = how a native speaker would say it here using the target expression, keeping her meaning and ideas. note = 1–3 short sentences in simple Chinese: first what she did well, then name the exact words in HER sentence that were not natural and explain WHY in plain Chinese: what those words mean to a native listener, or which word natives use instead and what the difference is (for example made = you crafted it yourself, did = you arranged it). Never give a one-line verdict like 'not natural' without the reason. If the words are not really wrong but only mean something slightly different here, or differ between British and American English, say so honestly instead of calling them unnatural. Use 2-4 short sentences. Then (if she missed it) how the target expression fits. If she did not use the target expression but her sentence is natural English, the note must START with 「你这句也自然，只是今天要练的是 " + String(k.chunk||"") + "」 and must never call her answer wrong or say she failed. If her word order follows Chinese habits (background or reason first and the main point buried at the end, or a long modifier placed before the noun), say so briefly and show where the main clause should go. If the verdict is \"got\" but her sentence still has a grammar or wording slip unrelated to the target expression, mention it in the note as a brief side tip starting with 「顺便：」, and never imply she got the card wrong.",
+      "fz (only when verdict is \"fuzzy\", else \"\"): \"close\" = she used the target (form or expression) but with a problem inside the target itself — she almost has it; \"other\" = natural English that does the task with a different expression or form instead of the target — the target did not come to mind.",
+      "Reply with ONLY a JSON object, no other text: {\"verdict\":\"got\"|\"fuzzy\"|\"miss\",\"fz\":\"close\"|\"other\"|\"\",\"mine\":\"...\",\"better\":\"...\",\"note\":\"...\"}"].join("\n\n");
+    try{
+      const r=await sampleFn(prompt,CHECK_OPTS);
+      const t=String((r&&r.text)||""), m=t.match(/\{[\s\S]*\}/), j=JSON.parse(m?m[0]:t);
+      if(["got","fuzzy","miss"].indexOf(j.verdict)<0) throw new Error("bad");
+      const fzv=j.verdict==="fuzzy"?((j.fz==="other"&&k.ukind!=="rule")?"other":"close"):"";
+      shown["ai-"+k.key]={verdict:j.verdict,fz:fzv,mine:String(j.mine||""),better:String(j.better||""),note:String(j.note||"")};
+      saveResult(k.key,j.verdict,{text:v,fz:fzv,mine:shown["ai-"+k.key].mine,better:shown["ai-"+k.key].better,note:shown["ai-"+k.key].note});
+    }catch(e){ shown["ai-"+k.key]={fail:true}; }
+    render();
+  }
+  // usage cards: the full comparison table is shown after every answer (the correction is the lesson)
+  function usageTable(box,k){ if(!k||k.kind!=="usage") return; const w=el("div","qaUse"); w.appendChild(el("span","fixLbl","完整对比")); if(k.rule) w.appendChild(el("div","qaA",k.rule));
+    if(k.rows&&k.rows.length){ const t=el("div","qaRows"); k.rows.forEach(r=>{ const row=el("div","qaRow"); row.appendChild(el("span","f",r.form||"")); row.appendChild(el("span","w",r.when||"")); if(r.ex) row.appendChild(el("span","e",r.ex)); t.appendChild(row); }); w.appendChild(t); }
+    if(k.myCase){ const m=el("div","qaCase"); m.appendChild(el("b",null,"你的场合：")); m.appendChild(document.createTextNode(k.myCase)); w.appendChild(m); }
+    box.appendChild(w); }
+  // auto-check a typed answer: exact → got, one small typo → fuzzy, else miss
+  function sameT(a,b){return normT(a)===normT(b);}
+  // "more natural" vs "more idiomatic" rows: hide the second one when it only changes a word or two
+  function nearSame(a,b){ const x=normT(a).split(" ").filter(Boolean), y=normT(b).split(" ").filter(Boolean); if(!x.length||!y.length) return false; return lev(x,y)<=2; }
+  // same words, but punctuation / capitals / spaces differ: say exactly what's missing instead of repeating the sentence
+  function smallFix(said,mine){
+    const s=String(said||"").trim(), m=String(mine||"").trim(); if(!s||!m||s===m||!sameT(s,m)) return [];
+    const out=[], endS=s.slice(-1), endM=m.slice(-1);
+    if(/[.?!]/.test(endM)&&!/[.?!]/.test(endS)) out.push("句末少了"+({".":"句号 .","?":"问号 ?","!":"感叹号 !"})[endM]);
+    else if(/[.?!]/.test(endM)&&/[.?!]/.test(endS)&&endS!==endM) out.push("句末应该用 "+endM+" 而不是 "+endS);
+    if(/^[a-z]/.test(s)&&/^[A-Z]/.test(m)) out.push("句首字母要大写："+m.split(/\s/)[0]);
+    if(/(^|[^A-Za-z])i([^A-Za-z]|$)/.test(s)) out.push("“我”的 I 永远大写");
+    if(/[,.?!;:][A-Za-z]/.test(s)) out.push("标点后面要空一格，比如 \"Yes, I\" 不是 \"Yes,I\"");
+    if(/\s[,.?!;:]/.test(s)) out.push("标点前面不空格，比如 \"right?\" 不是 \"right ?\"");
+    if(/\s{2,}/.test(s)) out.push("单词之间只空一格");
+    if(!out.length) out.push("只差标点或大小写，对照一下："+m);
+    return out;
+  }
+  function addSmallFix(box,said,mine){ const n=smallFix(said,mine); if(n.length) box.appendChild(el("div","fixNote zh","小细节："+n.join("；")+"。")); }
+  function normT(s){return String(s||"").toLowerCase().replace(/[’‘`]/g,"'").replace(/[^a-z0-9' ]+/g," ").replace(/\s+/g," ").trim();}
+  function lev(a,b){const m=a.length,n=b.length; if(!m) return n; if(!n) return m; let prev=Array.from({length:n+1},(_,j)=>j); for(let i=1;i<=m;i++){const cur=[i]; for(let j=1;j<=n;j++) cur[j]=Math.min(prev[j]+1,cur[j-1]+1,prev[j-1]+(a[i-1]===b[j-1]?0:1)); prev=cur;} return prev[n];}
+  function gradeTyped(v,k){
+    const raw=String(k.answer||""), target=k.stage==="gap"?raw.split(" (")[0].split("（")[0]:raw;
+    const a=normT(v), cands=[normT(target)]; if(k.stage==="cue") cands.push(normT(String(k.chunk||"").replace(/\s*\([^)]*\)/g," ")));
+    let best=99; cands.forEach(t=>{ if(t) best=Math.min(best, lev(a,t)); });
+    const tl=normT(target).length;
+    if(best===0) return "got"; if(best<=(tl>14?2:1)) return "fuzzy"; return "miss";
+  }
+  function firstLetters(s){return String(s||"").split(/\s+/).map(w=>w.replace(/^([^A-Za-z]*)([A-Za-z])([A-Za-z']*)/,(m0,p1,p2,p3)=>p1+p2+p3.replace(/[A-Za-z]/g,"_"))).join("  ");}
+  // answer line: for "use" cards the answer is a whole sentence, so highlight only the target chunk inside it
+  function answerNode(k){
+    if(k.stage!=="use") return el("div","chunk",k.answer);
+    const s=String(k.answer||""), core=String(k.chunk||"").replace(/\s*\([^)]*\)/g,"").replace(/[\u2026?.!]+$/,"").trim();
+    const d=el("div","sent"), at=core?s.toLowerCase().indexOf(core.toLowerCase()):-1;
+    if(at<0){ d.textContent=s; return d; }
+    d.appendChild(document.createTextNode(s.slice(0,at))); d.appendChild(el("span","hl",s.slice(at,at+core.length))); d.appendChild(document.createTextNode(s.slice(at+core.length)));
+    return d;
+  }
+  // review prompt by stage: match (cue + chunk list), gap (one blank), use (make your own sentence)
+  function renderPrompt(card,k,cards,r){
+    const labels={cue:"情景回应",match:"配对",gap:"填一个词",use:"自己说"};
+    const lv=Number(k.level); if(k.kind==="usage"&&k.ukind==="rule") card.appendChild(el("span","stage","改错"+(k.step?" · 第 "+k.step+" 步":"")+(Number(k.step)===1&&k.chunk?" · "+String(k.chunk):""))); else if(k.kind==="usage") card.appendChild(el("span","stage","用法对比"+(k.step?" · 第 "+k.step+" 步":"")+" · "+String(k.chunk||""))); else if(k.level!=null&&!isNaN(lv)) card.appendChild(el("span","stage","第 "+(lv+1)+" 次复习")); else if(labels[k.stage]) card.appendChild(el("span","stage",labels[k.stage]));
+    const txt=String(k.prompt||""), p=el("div","prompt");
+    if(k.stage==="cue"){ p.textContent=txt; card.appendChild(p); card.appendChild(el("div","letters",firstLetters(k.answer))); return; }
+    if(k.stage==="match"){
+      const m=txt.match(/^([\s\S]*?)\s*\[([^\]]+)\]\s*$/);
+      if(m){
+        p.textContent=m[1]; card.appendChild(p);
+        const bank=el("div","bank"); bank.appendChild(el("span","lbl","表达库（每个只用一次）"));
+        const chips=el("div","chips");
+        const doneChunks=cards.filter(c=>c.stage==="match"&&c.key!==k.key&&r[c.key]).map(c=>c.chunk);
+        m[2].split(" · ").map(x=>x.trim()).filter(Boolean).forEach(it=>{
+          const norm=x=>x.replace(/\s*\([^)]*\)/g,"").replace(/[…?.!]+$/,"").trim().toLowerCase();
+          const used=doneChunks.some(c=>norm(c)===norm(it));
+          chips.appendChild(el("span","chipw"+(used?" used":""),it));
+        });
+        bank.appendChild(chips); card.appendChild(bank); return;
+      }
+    }
+    if(k.stage==="use"){
+      const m=txt.match(/^([\s\S]*?)\(use:\s*([^)]+(?:\([^)]*\))?[^)]*)\)\s*→?\s*$/);
+      if(m){ p.appendChild(document.createTextNode(m[1].trim()+" ")); p.appendChild(el("span","useTag","use: "+m[2].trim())); p.appendChild(document.createTextNode(" →")); card.appendChild(p); return; }
+    }
+    if(k.stage==="gap"){
+      const i=txt.indexOf(': "'); 
+      if(i>=0){ p.appendChild(document.createTextNode(txt.slice(0,i+1))); p.appendChild(el("br")); }
+      const said=i>=0?txt.slice(i+2):txt;
+      said.split("____").forEach((part,j)=>{ if(j) p.appendChild(el("span","blank"," ")); p.appendChild(document.createTextNode(part)); });
+      card.appendChild(p); return;
+    }
+    p.textContent=txt; card.appendChild(p);
+  }
+  // 2. today's chunks + dialogue
+  function dialogue(p,lines){ if(!lines||!lines.length) return; const g=el("div","dlg"); lines.forEach(l=>{const b=el("div","bub"+(isLearner(l.who)?" me":"")); b.appendChild(el("span","who",l.who||"")); b.appendChild(rich(el("span","line"),l.line)); g.appendChild(b);}); p.appendChild(g); }
+  // learn-step dialogue: in the learner's lines the new chunks start covered; she says the line, then taps to check
+  function quizDialogue(p,lines,tag,cover){ if(!lines||!lines.length) return; const g=el("div","dlg");
+    lines.forEach((l,li)=>{ const me=isLearner(l.who); const b=el("div","bub"+(me?" me":"")); b.appendChild(el("span","who",l.who||""));
+      const ln=el("span","line");
+      String(l.line||"").split("**").forEach((part,i)=>{ if(!part) return;
+        if(i%2===0){ ln.appendChild(document.createTextNode(part)); return; }
+        const id="cov-"+tag+"-"+li+"-"+i;
+        if(!me||!cover||shown[id]) ln.appendChild(el("strong",null,part));
+        else { const c=el("button","cover"); c.type="button"; c.textContent=part.split(/\s+/).map(w=>{const m=w.match(/^([^A-Za-z]*)([A-Za-z])([A-Za-z']*)(.*)$/); return m? m[1]+m[2]+"_".repeat(Math.max(1,m[3].length))+m[4] : w;}).join(" "); c.setAttribute("aria-label","点一下显示表达"); c.onclick=()=>{shown[id]=true; render();}; ln.appendChild(c); }
+      });
+      b.appendChild(ln); g.appendChild(b); });
+    p.appendChild(g); }
+  // a numbered section inside a step, for a clear hierarchy
+  function sec(p,num,title,sub){const s=el("section","sec"); const h=el("div","secHead"); h.appendChild(el("span","secNum",String(num))); const t=el("div","secTitle"); t.appendChild(el("span",null,title)); if(sub) t.appendChild(el("span","secSub",sub)); h.appendChild(t); s.appendChild(h); p.appendChild(s); return s;}
+  function renderLearn(p,d){
+    const L=d.lesson||{};
+    p.appendChild(el("h2",null,"今日表达"));
+    let n=0;
+    if(L.fix&&(L.fix.better||(L.fix.items&&L.fix.items.length))){ const s=sec(p,++n,"昨天的回答 · 批改","对照看看哪里能说得更地道"); fixBlock(s,L.fix); }
+    if(L.chunks&&L.chunks.length){
+      const s=sec(p,++n,"今天的新表达",L.chunks.length+" 个");
+      const box=el("div","chunks");
+      L.chunks.forEach(c=>{const it=el("div","chunkItem"); const raw=String(c.chunk||""), mine=/^✍/.test(raw);
+        if(mine||c.home) it.appendChild(el("span","tag"+(mine?" mineTag":""),mine?"来自你的回答":"日常生活"));
+        const txt=raw.replace(/^✍️?\s*/,"");
+        const hr=el("div","hrow"); hr.appendChild(el("div","chunk",txt)); hr.appendChild(play([txt,c.example])); it.appendChild(hr);
+        if(c.meaning) it.appendChild(el("div","mean",c.meaning)); if(c.zh) it.appendChild(el("div","zhs",String(c.zh).replace("（来自你昨天的回答）",""))); if(c.example) it.appendChild(el("div","ex",c.example)); box.appendChild(it);});
+      s.appendChild(box);
+    }
+    const hasDlg=(L.dialogue&&L.dialogue.length)||(L.exchange&&L.exchange.length);
+    if(hasDlg){
+      const s=sec(p,++n,"情景对话",L.story&&L.story.episode?"第 "+L.story.episode+" 集":"");
+      if(L.story&&(L.story.title||L.story.recap)){ const sb=el("div","story"); if(L.story.title) sb.appendChild(el("span","ep",L.story.title)); if(L.story.recap) sb.appendChild(el("div","zh recap",L.story.recap)); s.appendChild(sb); }
+      if(L.situation) s.appendChild(el("div","scene",L.situation));
+      const head=(t,lines)=>{const hr=el("div","hrow"); hr.appendChild(el("h3",null,t)); hr.appendChild(play(lines.map(l=>l.line),"▶ 播放")); s.appendChild(hr);};
+      const cov=!!(L.chunks&&L.chunks.length);
+      if(cov) s.appendChild(el("div","turnNote","你的台词里，新表达只留了首字母：回想上面刚学的表达，把整句说出来，再点开对答案。"));
+      if(L.dialogue&&L.dialogue.length){head(cov?"对话 · 先说再看":"对话 · 读出声",L.dialogue); quizDialogue(s,L.dialogue,"d",cov);}
+      if(L.exchange&&L.exchange.length){head("日常小对话",L.exchange); quizDialogue(s,L.exchange,"x",cov);}
+      if(L.note) s.appendChild(el("div","think",L.note));
+      if(L.story&&L.story.teaser) s.appendChild(el("div","teaser","下集预告："+L.story.teaser));
+    } else if(L.note) p.appendChild(el("div","think",L.note));
+  }
+  // 3. practice: say/type → reveal reference
+  // one practice turn: their line → (hidden) hint → your bubble → reference
+  function practiceItem(p,q,key,c,ans,label){
+    const box=el("div","pr");
+    if(label) box.appendChild(el("span","prLabel",label));
+    if(q.scene) box.appendChild(el("div","narr",q.scene));
+    const cue=el("div","bub"); cue.appendChild(el("span","who",q.who||"")); cue.appendChild(rich(el("span","line"),q.cue||q.prompt||"")); box.appendChild(cue);
+    if(q.task&&!q.scene) box.appendChild(el("div","task",q.task));
+    if(q.use||q.hint){
+      const tip=el("div","tip"); tip.hidden=!shown["tip-"+key];
+      if(q.use){ const u=el("div",null,"用上："); u.appendChild(el("b","useB",q.use)); tip.appendChild(u); }
+      if(q.hint) tip.appendChild(el("div",null,q.hint));
+      if(tip.hidden) box.appendChild(btn("卡住了？看提示","tipBtn",()=>{shown["tip-"+key]=true; render();}));
+      box.appendChild(tip);
+    }
+    const mt=el("div","myturn"); mt.appendChild(el("span","who","{{LEARNER}}"));
+    const ta=el("textarea"); ta.id="ans-"+c.id+"-"+key; ta.placeholder="Your turn…"; ta.value=ans[key]||""; ta.setAttribute("aria-label","你的英文回答");
+    ta.onblur=()=>saveField({answers:{[key]:ta.value.trim()}},"已保存你的回答。");
+    mt.appendChild(ta);
+    if(!shown[key]) mt.appendChild(btn("看参考说法","small",()=>{ if(ta.value.trim()) saveField({answers:{[key]:ta.value.trim()}}); shown[key]=true; render();}));
+    box.appendChild(mt);
+    if(shown[key]&&q.reference){const r=el("div","ref"); r.appendChild(el("b",null,"参考说法")); r.appendChild(el("span",null,q.reference)); box.appendChild(r);}
+    p.appendChild(box);
+  }
+  function renderPractice(p,d,c){
+    const L=d.lesson||{}, ans=d.answers||{}, res=d.results||{};
+    p.appendChild(el("h2",null,"接话练习 · 用复习的表达"));
+    p.appendChild(el("div","turnNote","换几个场景，用今天复习过的表达回应。先自己试着说出口，卡住了再看提示；想写就打在你的气泡里。"));
+    (L.practice||[]).forEach((q,i)=>practiceItem(p,q,"p"+(i+1),c,ans));
+  }
+  // 4. writing
+  function renderWrite(p,d,c){
+    p.appendChild(el("h2",null,"今日写作"));
+    p.appendChild(el("div","zh",d.task));
+    const ta=el("textarea","big"); ta.id="writing-"+c.id; ta.placeholder="用英文写 2–3 句，不用怕写错。明天的简报会帮你改成更地道的说法。"; ta.value=d.writing||""; p.appendChild(ta);
+    const row=el("div","row"), note=el("span","note",d.writing?"已保存，明天的简报会帮你改。":"");
+    row.appendChild(btn("保存","primary",async()=>{note.textContent="保存中……"; const ok=await saveField({writing:ta.value.trim()}); note.textContent=ok?(ta.value.trim()?"已保存，明天的简报会帮你改。":"已清空。"):"没能保存，请检查网络后再试。";}));
+    row.firstChild.style.flex="0 0 auto"; row.appendChild(note); p.appendChild(row);
+  }
+  // 5. voice prompt
+  function renderVoice(p,d){
+    const L=d.lesson||{};
+    p.appendChild(el("h2",null,"开口练"));
+    const outer=p, hasTalk=!!(L.talk&&L.talk.topic); if(hasTalk) p=sec(outer,1,"语音陪练","");
+    const V=(L.voice&&typeof L.voice==="object")?L.voice:{prompt:L.voice}, text=String(V.prompt||"");
+    if(V.scene||V.who||(V.goals&&V.goals.length)){
+      const bx=el("div","vbrief");
+      if(V.who) bx.appendChild(el("div","vwho","对方："+V.who));
+      if(V.scene) bx.appendChild(el("div","vscene",V.scene));
+      if(V.goals&&V.goals.length){ bx.appendChild(el("div","vlab","你要做到")); const ul=el("ul","vgoals"); V.goals.forEach(g=>ul.appendChild(el("li",null,g))); bx.appendChild(ul); }
+      if(V.chunks&&V.chunks.length){ bx.appendChild(el("div","vlab","试着用上")); const cw=el("div","vchips"); V.chunks.forEach(c=>cw.appendChild(el("span","vchip",c))); bx.appendChild(cw); }
+      bx.appendChild(el("div","vnote","对方会像老师一样：小错在回话里自然地用对的说法带过，只有影响意思或反复出现的错才停下来纠正；卡住了可以说 \"Help\" 或说中文。结束时会总结纠正、更自然的说法，以及你没用上的表达。"));
+      p.appendChild(bx);
+    }
+    p.appendChild(el("div","zh vhow","点“复制”，新开一个 Claude 对话粘贴发送。等它回复“准备好了”，再切换到语音模式，说 “Start” 开始。"));
+    const row=el("div","row"), note=el("span","note");
+    const pre=el("pre","voice",text); pre.id="voiceText";
+    row.appendChild(btn("复制","primary",()=>{
+      const done=()=>{note.textContent="已复制。";};
+      try{ navigator.clipboard.writeText(text).then(done,()=>{ det.open=true; selectPre(pre,note); }); }catch(e){ det.open=true; selectPre(pre,note); }
+    }));
+    row.firstChild.style.flex="0 0 auto"; row.appendChild(note); p.appendChild(row);
+    const det=el("details","vdet"); det.appendChild(el("summary",null,"看看提示词原文")); det.appendChild(pre); p.appendChild(det);
+    if(L.boss){
+      const bx=el("div","bossBox"); bx.appendChild(el("h3",null,"Boss 战得分"));
+      if(L.boss.last!=null) bx.appendChild(el("div","note","上次得分："+L.boss.last+" / 10"));
+      const r2=el("div","row"); const inp=el("input"); inp.type="number"; inp.min="0"; inp.max="10"; inp.step="0.5"; inp.inputMode="decimal"; inp.className="score"; inp.placeholder="0–10"; if(d.bossScore!=null) inp.value=d.bossScore; inp.setAttribute("aria-label","面试官给你的总分");
+      const n2=el("span","note",d.bossScore!=null?"已记录。":"");
+      r2.appendChild(inp); r2.appendChild(btn("记录分数","primary",async()=>{const v=parseFloat(inp.value); if(isNaN(v)||v<0||v>10){n2.textContent="请填 0–10 的分数。";return;} n2.textContent="保存中……"; const ok=await saveField({bossScore:v}); n2.textContent=ok?"已记录，下周六对比进步。":"没能保存，请再试一次。";}));
+      r2.children[1].style.flex="0 0 auto"; r2.appendChild(n2); bx.appendChild(r2);
+      bx.appendChild(el("div","note","面试结束后，把面试官给的总分填在这里。"));
+      p.appendChild(bx);
+    }
+    if(hasTalk){ const s2=sec(outer,2,"开口 90 秒","自己想内容，只说不打字"); renderTalk(s2,d); }
+  }
+  // 开口 90 秒: her own content, spoken only, no grading; weekly: count the stalls
+  function renderTalk(p,d){
+    const T=d.lesson.talk;
+    p.appendChild(el("div","tip","只说不打字，不判分。内容自己想，想到什么说什么，用短句；卡住了就换个说法接着说，别停。"));
+    p.appendChild(el("div","prompt",T.topic));
+    const row=el("div","row"), cd=el("span","talkTimer","90 秒");
+    if(shown.talkStart) cd.dataset.tdeadline=shown.talkStart+90000;
+    row.appendChild(btn(shown.talkStart?"重新开始":"开始 90 秒","primary",()=>{shown.talkStart=Date.now(); render();}));
+    row.firstChild.style.flex="0 0 auto"; row.appendChild(cd); p.appendChild(row);
+    if(T.weekly){
+      const bx=el("div","bossBox"); bx.appendChild(el("h3",null,"每周一测：这 90 秒里卡壳了几次？"));
+      bx.appendChild(el("div","note","每周同一个话题，停下来想词、说不下去，都算一次卡壳。"));
+      const r2=el("div","row"); const inp=el("input"); inp.type="number"; inp.min="0"; inp.max="50"; inp.step="1"; inp.inputMode="numeric"; inp.className="score"; inp.placeholder="次数"; if(d.stalls!=null) inp.value=d.stalls; inp.setAttribute("aria-label","卡壳次数");
+      const n2=el("span","note",d.stalls!=null?"已记录。":"");
+      r2.appendChild(inp); r2.appendChild(btn("记录","primary",async()=>{const v=parseInt(inp.value,10); if(isNaN(v)||v<0){n2.textContent="请填一个次数。";return;} n2.textContent="保存中……"; const ok=await saveField({stalls:v}); n2.textContent=ok?"已记录，下周同一个话题再比。":"没能保存，请再试一次。";}));
+      r2.children[1].style.flex="0 0 auto"; r2.appendChild(n2); bx.appendChild(r2); p.appendChild(bx);
+    }
+  }
+  setInterval(()=>{ document.querySelectorAll("[data-tdeadline]").forEach(n=>{ const left=Math.ceil((+n.dataset.tdeadline-Date.now())/1000); if(left>0){ n.textContent="还剩 "+left+" 秒"; n.classList.remove("over"); } else { n.textContent="时间到 ✓"; n.classList.add("over"); } }); },250);
+  // mission: one real-life (self-talk) use of a chunk
+  function renderMission(p,d){
+    const M=d.lesson.mission;
+    p.appendChild(el("h2",null,"今日小任务")); p.appendChild(el("div","note","可选，顺手说一句就行，不做也没关系。"));
+    p.appendChild(el("div","zh mission",M.task));
+    if(M.chunk) p.appendChild(el("div","chunk",M.chunk));
+    if(M.example){ const ex=el("div","ref"); ex.appendChild(el("b",null,"可以这样说")); ex.appendChild(el("span",null,M.example)); p.appendChild(ex); }
+
+  }
+  function selectPre(pre,note){try{const r=document.createRange(); r.selectNodeContents(pre); const s=getSelection(); s.removeAllRanges(); s.addRange(r); note.textContent="已选中文字，请长按或按 Ctrl/⌘+C 复制。";}catch(e){note.textContent="请手动选中上面的文字复制。";}}
+  // 6. fix yesterday's writing
+  function chunkBox(list){
+    const box=el("div","chunks");
+    list.forEach(c=>{const it=el("div","chunkItem"); const raw=String(c.chunk||""), mine=/^✍/.test(raw);
+      if(c.home&&!mine) it.appendChild(el("span","tag","日常生活"));
+      const txt=raw.replace(/^✍️?\s*/,"");
+      const hr=el("div","hrow"); hr.appendChild(el("div","chunk",txt)); hr.appendChild(play([txt,c.example])); it.appendChild(hr);
+      if(c.meaning) it.appendChild(el("div","mean",c.meaning)); if(c.example) it.appendChild(el("div","ex",c.example)); zhFold(it,"c-"+txt,String(c.zh||"").replace("（来自你昨天的回答）","")); addWhy(it,c); box.appendChild(it);});
+    return box;
+  }
+  function renderFix(p,d){
+    const L=d.lesson||{}; p.appendChild(el("h2",null,"上次批改"));
+    let n=0;
+    if(L.fix&&(L.fix.better||(L.fix.items&&L.fix.items.length))){ const s=sec(p,++n,"上次的回答",L.fix.from?L.fix.from+" 的回答 · 对照看看哪里能说得更地道":"对照看看哪里能说得更地道"); fixBlock(s,L.fix); }
+    const mine=(L.chunks||[]).filter(c=>/^✍/.test(c.chunk||""));
+    if(mine.length){ const s=sec(p,++n,"来自你回答的新表达",""); s.appendChild(chunkBox(mine)); }
+  }
+  const normC=x=>String(x||"").replace(/\s*\([^)]*\)/g,"").replace(/^✍️?\s*/,"").replace(/[….?!,:;\s]+$/,"").trim().toLowerCase();
+  function chunkMatch(list,seg){const s=normC(seg); return (list||[]).find(c=>{const k=normC(c.chunk); return k&&(k===s||s.indexOf(k)>=0||k.indexOf(s)>=0);})||null;}
+  function reviewList(){const cc=cur(); return ((cc&&cc.data.cards)||[]).map(k=>({chunk:k.chunk,example:k.example,why:k.why,zh:k.hint?"":""}));}
+  function popBox(c){const b=el("div","pop"+(c.rv?" rv":"")); if(c.rv) b.appendChild(el("span","tag","复习")); b.appendChild(el("div","chunk",String(c.chunk||"").replace(/^✍️?\s*/,""))); if(c.meaning) b.appendChild(el("div","mean",c.meaning)); zhFold(b,"p-"+String(c.chunk||""),c.zh); if(c.example) b.appendChild(el("div","ex",c.example)); addWhy(b,c); return b;}
+  // dialogue where each **chunk** is tappable: tap it to open its meaning under that bubble
+  function popDialogue(p,lines,chunks,tag){
+    const g=el("div","dlg"), used=new Set();
+    lines.forEach((l,li)=>{
+      if(l.narr){ g.appendChild(el("div","narr in",l.narr)); if(l.zh&&shown.storyZh) g.appendChild(el("div","narr in zhs",l.zh)); return; }
+      const me=isLearner(l.who); const b=el("div","bub"+(me?" me":"")); b.appendChild(el("span","who",l.who||""));
+      const ln=el("span","line"); let open=null;
+      String(l.line||"").split("**").forEach((part,i)=>{
+        if(!part) return;
+        if(i%2===0){ ln.appendChild(document.createTextNode(part)); return; }
+        let c=chunkMatch(chunks,part), pid=tag+li+":"+i, rv=false;
+        if(!c){ c=chunkMatch(reviewList(),part); rv=!!c; }
+        if(!c){ ln.appendChild(el("strong",null,part)); return; }
+        used.add(c);
+        const bt=el("span","cs"+(rv?" rv":"")+(shown.pop===pid?" on":""),part); bt.setAttribute("role","button"); bt.tabIndex=0; bt.addEventListener("keydown",ev=>{if(ev.key==="Enter"||ev.key===" "){ev.preventDefault(); bt.click();}}); bt.setAttribute("aria-expanded",shown.pop===pid?"true":"false");
+        bt.addEventListener("click",ev=>{ev.preventDefault(); shown.pop=(shown.pop===pid?null:pid); render();});
+        ln.appendChild(bt); if(shown.pop===pid) open=rv?Object.assign({rv:true},c):c;
+      });
+      b.appendChild(ln); if(l.zh&&shown.storyZh) b.appendChild(el("div","zhs",l.zh)); if(open) b.appendChild(popBox(open)); g.appendChild(b);
+    });
+    p.appendChild(g); return used;
+  }
+
+  function renderStory(p,d,c){
+    const L=d.lesson||{};
+    p.appendChild(el("h2",null,"情景对话"));
+    let n=0, leftover=[], s0=null;
+    const sceneAll=(L.chunks||[]).filter(x=>!/^✍/.test(x.chunk||""));
+    const hasDlg=(L.dialogue&&L.dialogue.length)||(L.exchange&&L.exchange.length);
+    if(hasDlg){
+      const s=sec(p,++n,"今天这一集",L.story&&L.story.episode?"第 "+L.story.episode+" 集":""); s0=s;
+      if(L.story&&(L.story.title||L.story.recap)){ const sb=el("div","story"); if(L.story.title) sb.appendChild(el("span","ep",L.story.title)); const rc=[L.story.recap,L.situation].filter(Boolean).join(" "); if(rc) sb.appendChild(el("div","recap",rc)); const rz=[L.story.recapZh,L.situationZh].filter(Boolean).join(""); if(rz&&shown.storyZh) sb.appendChild(el("div","zhs",rz)); s.appendChild(sb); }
+      if(L.situation&&!(L.story&&(L.story.title||L.story.recap))) s.appendChild(el("div","zh recap",L.situation));
+      let used=new Set();
+      if(L.dialogue&&L.dialogue.length){
+        used=popDialogue(s,L.dialogue,sceneAll,"d");
+      }
+      if(L.exchange&&L.exchange.length){ s.appendChild(el("h3",null,"日常小对话")); popDialogue(s,L.exchange,sceneAll,"x").forEach(x=>used.add(x)); }
+      if(L.note) s.appendChild(el("div","think",L.note));
+      leftover=sceneAll.filter(x=>!used.has(x));
+    }
+    const sceneC=hasDlg?leftover:sceneAll;
+    if(sceneC.length){ const s=sec(p,++n,hasDlg?"更多新表达":"今天的新表达",""); s.appendChild(chunkBox(sceneC)); }
+    if(L.practice&&L.practice.length){
+      const s=s0||sec(p,++n,"接着聊",""); s.classList.add("cont");
+      const ans=d.answers||{};
+      beats(s,L,d,c);
+    }
+    if(L.story&&L.story.teaser){ p.appendChild(el("div","teaser","下集预告："+L.story.teaser)); if(L.story.teaserZh&&shown.storyZh) p.appendChild(el("div","zhs",L.story.teaserZh)); }
+    if(L.quick&&L.quick.length){ const s=sec(p,++n,"趁热填一填",L.quick.length+" 个新表达"); quick(s,L); }
+  }
+
+  // instant quiz: right after the dialogue, one blank per new chunk, so she recalls each one once the same day
+  function quick(s,L){
+    const Q=L.quick||[]; if(!Q.length) return;
+    const box=el("div","qbox"); box.appendChild(el("div","turnNote","今天刚学的表达，换个场景试着填出来。打完按回车也能检查。"));
+    Q.forEach((q,i)=>{
+      const c=el("div","qitem"), txt=String(q.prompt||""), j=txt.indexOf(': "');
+      if(j>=0) c.appendChild(el("div","qctx",txt.slice(0,j+1)));
+      const said=(j>=0?txt.slice(j+2):txt).replace(/^\s*"/,"").replace(/"\s*$/,"");
+      const ans=String(q.answer||""), word=ans.split(" (")[0], full=(ans.match(/\((.*)\)\s*$/)||[])[1]||"";
+      const cd=cur(), qa=(cd&&cd.data.quickAns)||{}, r=shown["qq-"+i]||qa["q"+i]||null, p=el("div","qsent"); let inp=null;
+      const keep=v=>{ shown["qq-"+i]=v; if(cd){ cd.data.quickAns=Object.assign({},cd.data.quickAns,{["q"+i]:v}); } saveField({quickAns:{["q"+i]:v}}); };
+      said.split("____").forEach((part,n)=>{
+        if(n){
+          if(r) p.appendChild(el("span","qword "+r.grade,word));
+          else { inp=el("input","qblank"); inp.type="text"; inp.autocomplete="off"; inp.autocapitalize="off"; inp.spellcheck=false; inp.value=shown["qqv-"+i]||""; inp.style.width=Math.max(6,inp.value.length+2)+"ch"; inp.oninput=()=>{shown["qqv-"+i]=inp.value; inp.style.width=Math.max(6,inp.value.length+2)+"ch";}; inp.setAttribute("aria-label","填空"); p.appendChild(inp); }
+        }
+        p.appendChild(document.createTextNode(part));
+      });
+      c.appendChild(p);
+      const act=el("div","qact");
+      if(!r){
+        const go=()=>{ const v=inp?inp.value.trim():""; if(!v){ if(inp) inp.focus(); return; } keep({typed:v,grade:gradeTyped(v,{stage:"gap",answer:q.answer})}); render(); };
+        if(inp) inp.onkeydown=e=>{ if(e.key==="Enter"){ e.preventDefault(); go(); } };
+        act.appendChild(btn("想不起来","qlink",()=>{ keep({typed:"",grade:"miss"}); render(); }));
+        act.appendChild(btn("检查","qgo",go));
+      } else {
+        act.classList.add("done");
+        act.appendChild(el("span","qmsg "+r.grade,{got:"✓ 对了",fuzzy:"差一点，注意拼写",miss:r.typed?"你写的是 "+r.typed:"记住它"}[r.grade]));
+        if(full) act.appendChild(el("span","qfull",full));
+        if(r.grade!=="got") act.appendChild(btn("再试一次","qlink",()=>{ delete shown["qq-"+i]; shown["qqv-"+i]=""; if(cd&&cd.data.quickAns) delete cd.data.quickAns["q"+i]; saveField({quickAns:{["q"+i]:null}}); render(); }));
+      }
+      c.appendChild(act); box.appendChild(c);
+    });
+    s.appendChild(box);
+  }
+  // one card per answer: the cue, what she said, the more natural version, a note
+  function fixItems(F){
+    if(F.items&&F.items.length) return F.items;
+    const split=s=>String(s||"").split("\n").map(x=>x.trim()).filter(Boolean);
+    const parse=l=>{const m=l.match(/^\d+\.\s*(?:\(([^)]*)\)\s*)?([\s\S]*)$/); return m?{cue:m[1]||"",text:m[2]}:{cue:"",text:l};};
+    const o=split(F.original), b=split(F.better), out=[];
+    for(let i=0;i<Math.max(o.length,b.length);i++){const x=o[i]?parse(o[i]):{cue:"",text:""}, y=b[i]?parse(b[i]):{cue:"",text:""}; out.push({cue:x.cue||y.cue, mine:x.text, better:y.text});}
+    return out;
+  }
+  function fixBlock(p,F){
+    fixItems(F).forEach((it,i)=>{
+      const c=el("div","fixCard");
+      const q=el("div","fixCue"); q.appendChild(el("span","fixNo",String(i+1))); q.appendChild(el("span",null,it.cue||"")); c.appendChild(q);
+      if(it.mine){ const r=el("div","fixRow mine"); r.appendChild(el("span","fixLbl","你说的")); r.appendChild(el("div","fixTxt",it.mine)); c.appendChild(r); }
+      if(it.better){ const r=el("div","fixRow better"); r.appendChild(el("span","fixLbl","更地道")); r.appendChild(rich(el("div","fixTxt"),it.better)); c.appendChild(r); }
+      if(it.note) c.appendChild(el("div","fixNote zh",it.note));
+      p.appendChild(c);
+    });
+    if(F.notes&&F.notes.length){const ul=el("ul","plain zh fixNotes"); F.notes.forEach(n=>ul.appendChild(el("li",null,n))); p.appendChild(ul);}
+  }
+  // 接着聊: story beats; after the learner sends, the character answers what she actually said (live, via Claude)
+  let sampleFn=null;
+  // the two answer checkers run on Sonnet 5.5 (the learner's choice, faster than Opus); falls back to the default tier if unavailable
+  const CHECK_OPTS={model:"claude-sonnet-5-5",modelTier:"default",cache:false};
+  try{ claude.use("sample").then(f=>{ sampleFn=f||null; }).catch(()=>{}); }catch(e){}
+  function flatLine(l){ return l.narr?("("+l.narr+")"):((l.who||"")+": "+String(l.line||"").replace(/\*\*/g,"")); }
+  // keep the planned storyline, but let the next beat react lightly to what the learner actually said
+  function beatOf(d,i){ const P=((d.lesson||{}).practice)||[], k="p"+(i+1), ad=shown["adapt-"+k]||((d.adapted||{})[k]); return ad?Object.assign({},P[i],ad):P[i]; }
+  const MAX_FOLLOW=2; // follow-up questions a character may ask inside one part of the conversation
+  const TOTAL_MAX=3; // the learner answers at most 3 times a day in 接着聊 (planned beats + follow-ups)
+  function tKey(i,t){ return "p"+(i+1)+(t?"_"+(t+1):""); }
+  function ansOf(d,k){ return shown["myans-"+k]||((d.answers||{})[k])||""; }
+  function repOf(d,k){ return shown["rep-"+k]||((d.replies||{})[k])||""; }
+  const asksQ=x=>/\?/.test(String(x||""));
+  function beatLines(d,i,upto){ const q=beatOf(d,i); if(!q) return ""; const out=[q.who+": "+q.cue]; for(let t=0;t<upto;t++){ const k=tKey(i,t), a=ansOf(d,k), r=repOf(d,k); if(!a) break; out.push("{{LEARNER}}: "+a); if(r) out.push(q.who+": "+r); } return out.join("\n"); }
+  async function adaptNext(d,i,exch){
+    const L=d.lesson||{}, P=L.practice||[], nx=P[i+1]; if(!nx||!sampleFn) return;
+    const nk="p"+(i+2); if((d.answers||{})[nk]||shown["myans-"+nk]) return;
+    const q=beatOf(d,i);
+    const prompt=["You keep a short English-learning story on track. {{LEARNER}}, {{ROLE}} {{GOAL}}, is inside a PLANNED storyline. Small changes based on what she says are welcome, but the main plot must never drift.",
+      "Story so far:\n"+(L.dialogue||[]).map(flatLine).join("\n"),
+      "Last exchange:\n"+exch,
+      "PLANNED next beat:\nscene (narration): "+(nx.scene||"")+"\n"+nx.who+" says to {{LEARNER}}: "+nx.cue+"\n{{LEARNER}}'s task: "+(nx.task||"")+"\nHint keywords for {{LEARNER}}: "+(nx.hint||""),
+      "Adapt the planned next beat so it follows naturally and logically from what {{LEARNER}} actually said and from the reply. The main storyline is fixed and must stay on track: keep the same speaker, the same place in the story and the same plot purpose of this beat (e.g. if it delivers an interview brief, it still delivers it); never add new characters or new events, never skip or change a story event, and keep every name, time and place in the planned scene exactly as written (e.g. a practice call with Mia never becomes a call with someone else; an event planned for tomorrow has not happened yet). If the last reply left the previous moment open, the scene sentence first closes it in a few words (e.g. 'Mia ends the call.'). Within that, her answer comes first: (1) if she made a choice or decision (e.g. which thing to practise, which option to take), the next beat MUST follow HER choice, even if the plan assumed the other option: change the cue and the task to fit what she chose; (2) if her answer already covered what the planned cue asks, do not ask it again: move one step forward from what she said; (3) if the planned cue would jump to an unrelated topic, add a short natural bridge in the scene or cue (or ask a follow-up on what she just said) so the conversation flows. The cue must react to the content of her answer, not ignore it. If the planned beat already fits, return it unchanged. scene = ONE short narration sentence in simple English (B1 level), written in the second person: {{LEARNER}} is the reader, so call her \"you\" (e.g. \"Mia calls you\", \"you arrive\"), never \"{{LEARNER}}\", \"she\" or \"her\"; sceneZh = the same sentence in Chinese, also with 你, never {{LEARNER}}/她; cue = 1–2 short sentences of natural spoken English that "+nx.who+" says TO {{LEARNER}}. The cue is NOT {{LEARNER}}'s answer: it must leave the task for {{LEARNER}} to do (it asks her something or invites her reply), and must never answer it for her. hint = 2–3 short English keywords joined by \" · \" that help {{LEARNER}} answer YOUR cue (not full sentences, no Chinese); keep the planned hint if it still fits. task = {{LEARNER}}'s goal for YOUR cue in a few simple English words (keep the planned task if it still fits).",
+      "Reply with ONLY a JSON object: {\"scene\":\"...\",\"sceneZh\":\"...\",\"cue\":\"...\",\"hint\":\"...\",\"task\":\"...\"}"].join("\n\n");
+    try{
+      const r=await sampleFn(prompt,{cache:false});
+      const t=String((r&&r.text)||""), m=t.match(/\{[\s\S]*\}/), j=JSON.parse(m?m[0]:t);
+      const cue=String((j&&j.cue)||"").trim(), hint=String((j&&j.hint)||"").trim();
+      // safety net: if the planned line asks the learner something, the adapted line must too; and it needs a matching hint. Otherwise keep the planned beat.
+      const asks=s=>/\?/.test(s);
+      if(cue&&hint&&(!asks(nx.cue||"")||asks(cue))){ const ad={scene:String(j.scene||nx.scene||""),sceneZh:String(j.sceneZh||""),cue:cue,hint:hint,task:String(j.task||nx.task||"")}; shown["adapt-"+nk]=ad; saveField({adapted:{[nk]:ad}}); }
+    }catch(e){}
+  }
+  async function react(d,c,i,t,v){
+    const L=d.lesson||{}, P=L.practice||[], q=beatOf(d,i), key=tKey(i,t), nx=P[i+1];
+    if(!sampleFn){ shown["repdone-"+key]=true; render(); return; }
+    const before=P.slice(0,i).map((b0,j)=>beatLines(d,j,MAX_FOLLOW+1)).join("\n");
+    const answered=P.reduce((n,x,j)=>{ for(let u=0;u<=MAX_FOLLOW;u++) if(ansOf(d,tKey(j,u))) n++; return n; },0), canAsk=t<MAX_FOLLOW&&(answered+(P.length-(i+1)))<TOTAL_MAX;
+    const prompt=["You write ONE short line for a character in an English-learning story. {{LEARNER}} is {{ROLE}} {{GOAL}}; she is practising natural English.",
+      "Story so far:\n"+(L.dialogue||[]).map(flatLine).join("\n")+(before?"\n"+before:""),
+      "Current conversation:\n"+beatLines(d,i,t)+"\n{{LEARNER}}: "+v,
+      nx?("PLANNED next step (it comes once this part of the conversation has run its course, and will be adjusted to fit what {{LEARNER}} said): "+(nx.scene||"")+" "+nx.who+" may say: \""+nx.cue+"\". Don't do it yet and don't ask what it will ask. If {{LEARNER}} made a choice or decision that differs from this plan, go with HER choice and do not set up the planned step."):"This is the last part of today's episode.",
+      "Write "+q.who+"'s reply to what {{LEARNER}} ACTUALLY said: 1-2 short sentences of natural spoken / Teams-message English that a native colleague would really use, with contractions, friendly and in character. React to her meaning even if her English has mistakes; never correct her English or mention mistakes. If her reply went off-topic or was unclear, respond briefly and naturally, then gently steer back to the story. "+
+      (canAsk?"Talk like a real person in this exact situation: if a real "+q.who+" would naturally follow up on what she just said (her answer was vague or half-finished, or raised something worth probing), ask ONE short follow-up question; she will get to answer it. In that case, add a new last line: HINT: followed by 2-3 short English keywords joined by \" · \" that help her answer your question (no full sentences, no Chinese). If her answer was complete enough, just react briefly WITHOUT a question so the conversation moves on"+(nx?". In that case also don't invite her to keep talking (no 'Go ahead', 'Tell me more', 'Let's hear it', 'Show me'): close this moment the way a real person would (agree, thank, wrap up), because the scene changes right after your line.":" and the episode wraps up naturally.")+" Never repeat a question that was already asked.":"The conversation now moves on, so do NOT ask a question: react briefly in a few words, with no question marks."+(nx?"":" Close the episode naturally."))+
+      " If her answer stops mid-sentence (her time ran out), react to what she managed to say. Reply with only the line itself: no name, no quotes, no stage directions."].join("\n\n");
+    shown["thinking-"+key]=true; render();
+    try{
+      const r=await sampleFn(prompt,{modelTier:"quick",cache:false,onText:({text})=>{ shown["rep-"+key]=String(text).split(/\s*HINT:/)[0]; render(); }});
+      const parts=String(r.text||"").split(/\s*HINT:/), rr=parts[0].trim(), hh=(parts[1]||"").trim(); shown["rep-"+key]=rr;
+      saveField({replies:{[key]:rr}});
+      if(hh&&canAsk&&asksQ(rr)){ const nk=tKey(i,t+1); shown["fh-"+nk]=hh; saveField({fhint:{[nk]:hh}}); }
+      if(!(canAsk&&asksQ(rr))) await adaptNext(d,i,beatLines(d,i,t)+"\n{{LEARNER}}: "+v+"\n"+q.who+": "+rr);
+    }catch(e){ if(!e||e.code!=="cancelled") shown["repfail-"+key]=true; }
+    delete shown["thinking-"+key]; shown["repdone-"+key]=true; render();
+  }
+  // 限时模式: 30 seconds per answer, no deleting — closer to a real conversation
+  const TIME_LIMIT=60;
+  function timedOn(){ try{ return localStorage.getItem("englishDailyTimed:"+learnerName)!=="0"; }catch(e){ return true; } }
+  function setTimed(v){ try{ localStorage.setItem("englishDailyTimed:"+learnerName,v?"1":"0"); }catch(e){} shown.timedLocal=v; }
+  const timeUp={};
+  setInterval(()=>{ document.querySelectorAll("[data-deadline]").forEach(n=>{ const left=Math.ceil((+n.dataset.deadline-Date.now())/1000);
+    if(left>0){ n.textContent="⏱ "+left+" 秒"; n.classList.toggle("urgent",left<=10); }
+    else if(!n.dataset.fired){ n.dataset.fired="1"; n.textContent="时间到"; const f=timeUp[n.dataset.key]; if(f) f(); } }); },250);
+  function beats(s,L,d,c){
+    const P=L.practice||[];
+    const timed=(shown.timedLocal!=null)?shown.timedLocal:timedOn();
+    if(P.length&&P.some((x,i)=>!ansOf(d,tKey(i,0)))){
+      const tm=el("div","tmrow"); tm.appendChild(el("span",null,timed?"⏱ 限时模式：每次回答 "+TIME_LIMIT+" 秒，开始打字就计时，可以改错字，时间到自动发送。先回答，再加一句原因或下一步":"⏱ 限时模式已关闭"));
+      tm.appendChild(btn(timed?"关闭":"开启","tipBtn",()=>{ setTimed(!timed); render(); })); s.appendChild(tm);
+    }
+    let cnt=0;
+    for(let i=0;i<P.length;i++){
+      const q=beatOf(d,i);
+      const box=el("div","pr"); s.appendChild(box);
+      if(q.scene) box.appendChild(el("div","narr",q.scene));
+      const cue=el("div","bub"); cue.appendChild(el("span","who",q.who||"")); cue.appendChild(rich(el("span","line"),q.cue||"")); box.appendChild(cue);
+      let beatDone=false;
+      for(let t=0;t<=MAX_FOLLOW;t++){
+        const key=tKey(i,t), mine=ansOf(d,key);
+        if(!mine){
+          if(t>0&&(i+1<P.length)&&ansOf(d,tKey(i+1,0))){ beatDone=true; break; }
+          if(t===0&&q.task) box.appendChild(el("div","task",q.task));
+          const mt=el("div","myturn"); mt.appendChild(el("span","who","{{LEARNER}}"));
+          const ta=el("textarea"); ta.id="ans-"+c.id+"-"+key; ta.placeholder=t===0?"Your turn…":"Answer "+(q.who||"")+"…"; ta.value=shown["draft-"+key]||""; ta.setAttribute("aria-label","你的英文回答"); mt.appendChild(ta);
+          const send=(force)=>{ let v=ta.value.trim(); if(!v){ if(!force){ ta.focus(); return; } v="…"; } delete timeUp[key]; shown["myans-"+key]=v; delete shown["rep-"+key]; delete shown["repdone-"+key]; delete shown["repfail-"+key]; saveField({answers:{[key]:v}}); render(); react(d,c,i,t,v); };
+          const bar=el("div","mtbar");
+          if(timed){
+            const cd=el("span","cd","⏱ "+TIME_LIMIT+" 秒"); cd.dataset.key=key; if(shown["dl-"+key]) cd.dataset.deadline=shown["dl-"+key]; bar.appendChild(cd);
+            timeUp[key]=()=>send(true);
+            const start=()=>{ if(!shown["dl-"+key]){ shown["dl-"+key]=Date.now()+TIME_LIMIT*1000; cd.dataset.deadline=shown["dl-"+key]; } };
+            ta.addEventListener("beforeinput",()=>start());
+          }
+          ta.addEventListener("input",()=>{ shown["draft-"+key]=ta.value; });
+          const hn=t===0?q.hint:(shown["fh-"+key]||((d.fhint||{})[key])||""); if(hn){ const tp=el("div","tip",hn); tp.hidden=!shown["tip-"+key]; if(tp.hidden) bar.appendChild(btn("卡住了？看提示","tipBtn",()=>{shown["tip-"+key]=true; render();})); else bar.appendChild(tp); }
+          bar.appendChild(btn("发送","small send",()=>send(false)));
+          mt.appendChild(bar); box.appendChild(mt); return;
+        }
+        const me=el("div","bub me"); me.appendChild(el("span","who","{{LEARNER}}")); me.appendChild(el("span","line",mine)); box.appendChild(me);
+        const r=repOf(d,key), thinking=shown["thinking-"+key];
+        if(r||thinking){ const b=el("div","bub live"); b.appendChild(el("span","who",q.who||"")); b.appendChild(el("span","line",r||"…")); box.appendChild(b); }
+        if(thinking) return;
+        const saved=!!(d.answers||{})[key]&&!shown["myans-"+key];
+        if(!r){ if(!sampleFn||shown["repdone-"+key]||saved){ beatDone=true; break; } return; }
+        cnt++;
+        if(!(t<MAX_FOLLOW&&asksQ(r)&&((cnt+(P.length-(i+1)))<TOTAL_MAX||ansOf(d,tKey(i,t+1))))){ beatDone=true; break; }
+      }
+      if(!beatDone) return;
+    }
+  }
+  // listening + shadowing, about 10 minutes: understand first, then shadow one short passage 3 times
+  function renderListen(p,d){
+    const Ls=d.lesson.listen; p.appendChild(el("h2",null,"听力跟读"));
+    const box=el("div","listen"); p.appendChild(box);
+    if(Ls.title) box.appendChild(el("div","ltitle",Ls.title));
+    if(Ls.source||Ls.length) box.appendChild(el("span","src",[Ls.source,Ls.length].filter(Boolean).join(" · ")));
+    if(Ls.zh) box.appendChild(el("div","zh recap",Ls.zh));
+    // step 1
+    if(Ls.retell&&Ls.retell.prompt){
+      box.appendChild(el("h3",null,"复述：不用重看视频，用英文说一个观点"));
+      const rc=el("div","qcard"); rc.appendChild(el("div","qsent",Ls.retell.prompt)); box.appendChild(rc);
+      thinkInput(rc,"retell","用 2–3 句英文说……",Ls.retell.ref||"",Ls.retell.note||"",false,Ls.retell.prompt+"\n\nShe is retelling one idea from a video she watched yesterday. You don't know the video. Judge only whether her English is natural, the main point comes first, and the idea is clear. Do not judge whether the content is accurate.");
+      return;
+    }
+    box.appendChild(el("h3",null,"① 先听懂：完整看一遍，只想这两个问题"));
+    if(/^https:\/\//.test(Ls.url||"")){ const a=el("a","open","打开视频 ↗"); a.href=Ls.url; a.target="_blank"; a.rel="noopener"; box.appendChild(a); }
+    if(Ls.focus&&Ls.focus.length){ const ul=el("ul","plain zh"); Ls.focus.forEach(f=>ul.appendChild(el("li",null,f))); box.appendChild(ul); }
+    // step 2-3
+    const P=Ls.passage;
+    if(P&&P.lines&&P.lines.length){
+      box.appendChild(el("h3",null,"② 跟这一段"+(P.at?"（视频 "+P.at+"）":"")));
+      box.appendChild(el("div","plegend","粗体 = 重读　/ = 停顿　‿ = 连读"));
+      if(P.lines.some(x=>x.zh)) box.appendChild(btn(shown.lzh?"收起中文":"显示中文","tipBtn",()=>{shown.lzh=!shown.lzh; render();}));
+      const ul=el("ul","shadow");
+      P.lines.forEach(L=>{ const li=el("li","pline"), en=el("div","pen");
+        String(L.en||"").split(/(\*\*[^*]+\*\*|\s\/\s|‿)/).forEach(t=>{ if(!t) return;
+          if(/^\*\*.+\*\*$/.test(t)) en.appendChild(el("b","stress",t.slice(2,-2)));
+          else if(/^\s\/\s$/.test(t)) en.appendChild(el("span","pause"," / "));
+          else if(t==="‿") en.appendChild(el("span","link","‿"));
+          else en.appendChild(document.createTextNode(t)); });
+        li.appendChild(en); if(L.zh&&shown.lzh) li.appendChild(el("div","pzh",L.zh)); ul.appendChild(li); });
+      box.appendChild(ul);
+      box.appendChild(el("h3",null,"③ 跟 3 遍就停"));
+      box.appendChild(el("div","tip","第 1 遍看着上面的字跟，第 2、3 遍尽量不看。卡住了就跳过、接着跟，不回头抠。3 遍跟完就收工，不求完美。"));
+    } else {
+      box.appendChild(el("h3",null,"② 再听一遍：听一句，暂停，跟一句"));
+      box.appendChild(el("div","tip","打开视频自带的英文字幕，听一句就暂停，马上跟着说一句；也可以比讲者慢半拍、边听边跟。选一小段，跟 3 遍就收工。"));
+    }
+  }
+  // 英语思维: find the head of a long sentence, then build one by hooking on one piece at a time
+  // live check of her 英语思维 answers: did she do the task, is it natural, is the word order English?
+  function fbOf(key){ const cd=cur(); return shown["thf-"+key]||((cd&&cd.data.thinkFb)||{})[key]||null; }
+  async function aiThink(key,task,v,ref){
+    if(!sampleFn) return;
+    shown["thf-"+key]={pending:true}; render();
+    const prompt=["You are checking one short answer from {{LEARNER}}, {{ROLE}} (about {{LEVEL}}) who is training herself to think directly in English instead of translating from Chinese.",
+      "Task: "+task,"Her answer: \""+v+"\"","A good sample answer (not the only right one): \""+ref+"\"",
+      "Judge HER answer on its own merits (other wordings can be just as good): (1) does it do the task; (2) is it correct, natural English a native speaker would really say; (3) word order — is the main clause / answer first rather than Chinese-style background or reason first and the point last, is the new or key information near the end of its clause, are long modifiers after the noun?",
+      "verdict: \"got\" = does the task in natural English (a tiny slip is fine); \"fuzzy\" = does the task but has a clear grammar, wording or word-order problem; \"miss\" = doesn't do the task or is hard to understand.",
+      "better = HER answer corrected into natural English, keeping her ideas and as much of her wording as still sounds natural. Naturalness comes first: if a word or phrase is awkward, replace it or drop it instead of patching it into an odd construction; reread better as a native speaker would and check every preposition and collocation (if her answer is already natural, better = her answer exactly). note = 1–2 short sentences in simple Chinese: first what she did well, then the most useful fix (name the word-order problem plainly if there is one, e.g. 结论放到了最后、修饰语放在了名词前面). Never say \"wrong\".",
+      "Reply with ONLY a JSON object: {\"verdict\":\"got\"|\"fuzzy\"|\"miss\",\"better\":\"...\",\"note\":\"...\"}"].join("\n\n");
+    try{
+      const r=await sampleFn(prompt,CHECK_OPTS); const t=String((r&&r.text)||""), m=t.match(/\{[\s\S]*\}/), j=JSON.parse(m?m[0]:t);
+      if(["got","fuzzy","miss"].indexOf(j.verdict)<0) throw new Error("bad");
+      const R={verdict:j.verdict,better:String(j.better||""),note:String(j.note||"")};
+      shown["thf-"+key]=R; saveField({thinkFb:{[key]:R}});
+    }catch(e){ delete shown["thf-"+key]; }
+    render();
+  }
+  function renderFb(box,F,v){
+    if(!F) return false;
+    if(F.pending){ const r=el("div","result"); r.appendChild(el("b",null,"正在检查你的句子……")); box.appendChild(r); return true; }
+    const res=el("div","result "+F.verdict); res.appendChild(el("b",null,{got:"✓ 说对了",fuzzy:"差一点",miss:"还要再改改"}[F.verdict]||"")); box.appendChild(res);
+    if(F.better&&!sameT(F.better,v)){ const b=el("div","fixRow better"); b.appendChild(el("span","fixLbl","你的说法 · 改得更自然")); b.appendChild(el("div","fixTxt",F.better)); box.appendChild(b); }
+    else if(F.better) addSmallFix(box,v,F.better);
+    if(F.note) box.appendChild(el("div","fixNote zh",F.note));
+    return true;
+  }
+  function thinkInput(box,key,ph,ref,note,isRead,task){
+    const cd=cur(), A=(cd&&cd.data.thinkAns)||{}, v=(shown["th-"+key]!=null)?shown["th-"+key]:A[key];
+    const aiTask=isRead?"":(task||""), aiRef=ref||"";
+    if(v==null){
+      const ta=el("textarea","say"); ta.placeholder=ph; ta.value=shown["thd-"+key]||""; ta.oninput=()=>{shown["thd-"+key]=ta.value;}; ta.setAttribute("aria-label","你的英文"); box.appendChild(ta);
+      const row=el("div","qact");
+      const go=(val)=>{ shown["th-"+key]=val; if(cd){ cd.data.thinkAns=Object.assign({},cd.data.thinkAns,{[key]:val}); } saveField({thinkAns:{[key]:val}}); render(); if(val&&aiTask) aiThink(key,aiTask,val,aiRef); };
+      row.appendChild(btn("想不出来","qlink",()=>go("")));
+      row.appendChild(btn("对照参考","qgo",()=>{ const t=ta.value.trim(); if(!t){ ta.focus(); return; } go(t); }));
+      box.appendChild(row); return false;
+    }
+    if(v){ const m=el("div","said"); m.appendChild(el("b",null,"你写的")); m.appendChild(el("span",null,v)); box.appendChild(m); }
+    if(isRead&&v&&sameT(v,ref)) box.appendChild(el("div","qmsg got","✓ 找对了"));
+    else { const hadFb=(v&&!isRead)?renderFb(box,fbOf(key),v):false; const r=el("div","fixRow better"); r.appendChild(el("span","fixLbl",isRead?"车头（主干）":"参考说法")); r.appendChild(el("div","fixTxt",ref||"")); box.appendChild(r); if(v&&!isRead&&!hadFb) addSmallFix(box,v,ref); }
+    if(note) box.appendChild(el("div","fixNote zh",note));
+    return true;
+  }
+  // 搭积木: she types only the piece she adds; the reference shows the whole sentence with that piece highlighted
+  function buildStep(box,key,base,st){
+    const cd=cur(), A=(cd&&cd.data.thinkAns)||{}, v=(shown["th-"+key]!=null)?shown["th-"+key]:A[key];
+    const b0=String(base||"").replace(/[.!?]\s*$/,""), ref=String(st.ref||""), add=ref.indexOf(b0)===0?ref.slice(b0.length).trim():ref;
+    const aiTask="Continue this sentence by adding ONE piece that starts with the connector \""+(st.hook||"")+"\": \""+base+"\" (idea keywords: "+(st.hint||"")+"). She typed only the piece she adds, which goes right after the sentence.", aiRef=add;
+    if(v==null){
+      const ta=el("textarea","say"); ta.placeholder="只打要加的这一节，比如："+(st.hook||"……"); ta.value=shown["thd-"+key]||""; ta.oninput=()=>{shown["thd-"+key]=ta.value;}; ta.setAttribute("aria-label","你要加的部分"); box.appendChild(ta);
+      const row=el("div","qact");
+      const go=(val)=>{ shown["th-"+key]=val; if(cd){ cd.data.thinkAns=Object.assign({},cd.data.thinkAns,{[key]:val}); } saveField({thinkAns:{[key]:val}}); render(); if(val&&aiTask) aiThink(key,aiTask,val,aiRef); };
+      row.appendChild(btn("想不出来","qlink",()=>go("")));
+      row.appendChild(btn("对照参考","qgo",()=>{ const t=ta.value.trim(); if(!t){ ta.focus(); return; } go(t); }));
+      box.appendChild(row); return false;
+    }
+    if(v){ const m=el("div","said"); m.appendChild(el("b",null,"你加的")); m.appendChild(el("span",null,v)); box.appendChild(m); }
+    const hadFb=v?renderFb(box,fbOf(key),v):false;
+    const r=el("div","fixRow better"); r.appendChild(el("span","fixLbl","参考"));
+    const t=el("div","fixTxt"); if(add!==ref){ t.appendChild(document.createTextNode(b0+" ")); t.appendChild(el("span","useTag",add)); } else t.textContent=ref; r.appendChild(t); box.appendChild(r);
+    if(v&&!hadFb) addSmallFix(box,v,add);
+    if(st.note) box.appendChild(el("div","fixNote zh",st.note));
+    return true;
+  }
+  function renderThink(p,d){
+    const T=d.lesson.think||{}; p.appendChild(el("h2",null,"小练习"));
+    if(T.focus) p.appendChild(el("div","ltitle zh",T.focus));
+    if(T.tip) p.appendChild(el("div","tip",T.tip));
+    let n=0;
+    if(T.read&&T.read.sentence){
+      const s=sec(p,++n,"找车头","先找出“谁 + 做了什么”，其他都是车厢");
+      const c=el("div","qcard"); c.appendChild(el("div","qsent",T.read.sentence)); s.appendChild(c);
+      thinkInput(c,"read","把主干打出来……",T.read.core,T.read.note,true);
+    }
+    const B=T.build;
+    if(B&&B.start&&B.steps&&B.steps.length){
+      const s=sec(p,++n,"搭积木","一次只挂一节车厢");
+      s.appendChild(el("div","turnNote","用提示的挂钩词往后加一节，只打要加的部分。先把整句小声说一遍，再打。"));
+      let curS=B.start;
+      for(let i=0;i<B.steps.length;i++){
+        const st=B.steps[i], c=el("div","qcard");
+        c.appendChild(el("div","qctx","第 "+(i+1)+" 节 · 现在的句子"));
+        c.appendChild(el("div","qsent",curS));
+        const h=el("div","zh"); h.appendChild(document.createTextNode("挂钩词：")); h.appendChild(el("span","useTag",st.hook||"")); if(st.hint) h.appendChild(document.createTextNode("　线索："+st.hint)); c.appendChild(h);
+        s.appendChild(c);
+        const done=buildStep(c,"b"+(i+1),curS,st);
+        if(!done) break;
+        curS=st.ref;
+      }
+    }
+    [["facts","给事实说句子","只给关键词，自己组织：先说结论，原因放后面，重点放最后"],["quick","快问快答","像在会上被问到一样，直接用英文答，不要先想中文"]].forEach(function(q){
+      const F=T[q[0]]; if(!(F&&F.prompt)) return;
+      const s=sec(p,++n,q[1],q[2]), c=el("div","qcard");
+      c.appendChild(el("div","qsent",F.prompt));
+      if(F.keys&&F.keys.length){ const kk=el("div","zh"); kk.appendChild(document.createTextNode("关键词：")); kk.appendChild(el("span","useTag",F.keys.join(" · "))); c.appendChild(kk); }
+      if(F.hint){ const tp=el("div","tip",F.hint); tp.hidden=!shown["thf-"+q[0]]; if(tp.hidden) c.appendChild(btn("卡住了？看线索","tipBtn",()=>{shown["thf-"+q[0]]=true; render();})); c.appendChild(tp); }
+      s.appendChild(c);
+      thinkInput(c,q[0],"用 1–2 句英文说……",F.ref,F.note,false,F.prompt+(F.keys&&F.keys.length?"\n\nKeywords she was given: "+F.keys.join(", "):"")+"\n\nHere is a sample answer: \""+F.ref+"\". Her answer can use different wording and still be right if it does the task and puts the main point first and the key information last.");
+    });
+    const X=T.extra;
+    if(X&&X.prompt){
+      const around=X.kind==="around";
+      const s=sec(p,++n,around?"绕着说":"看到什么说什么",around?"想不起那个词？用简单英文把它描述出来":"不经过中文，直接用英文描述眼前的东西");
+      const c=el("div","qcard"); if(around&&X.thing){ const th=el("div","zh"); th.appendChild(document.createTextNode("想不起来的英文：")); th.appendChild(el("span","useTag",X.thing)); c.appendChild(th); } c.appendChild(el("div","qsent",X.prompt));
+      if(X.hint){ const tp=el("div","tip",X.hint); tp.hidden=!shown["thx-tip"]; if(tp.hidden) c.appendChild(btn("卡住了？看线索","tipBtn",()=>{shown["thx-tip"]=true; render();})); c.appendChild(tp); }
+      s.appendChild(c);
+      const xDone=thinkInput(c,"x",around?"不用那个词，把意思说出来……":"用 2–3 句英文描述……",X.ref,"",false,around&&X.word?X.prompt+"\n\nThis is a 'say it without the word' exercise. The word or expression she can't remember: "+(X.thing||"")+" (in English: "+X.word+"; it may be a noun, verb, adjective or phrase). She must get the meaning across WITHOUT saying \""+X.word+"\" (or the same word in another form). Check whether a listener would understand what she means. If she used the word itself, the verdict is at most \"fuzzy\" and the note tells her to describe it instead.":X.prompt);
+      if(xDone&&X.word){ const w=el("div","answer"); w.appendChild(el("span","fixLbl","那个词")); w.appendChild(el("div","chunk",X.word)); c.appendChild(w); }
+      if(xDone&&X.note) c.appendChild(el("div","fixNote zh",X.note));
+    }
+    const Pc=T.picture;
+    if(Pc&&Pc.svg&&Pc.prompt){
+      const s=sec(p,++n,"看图说","先看图，直接用英文说，不经过中文");
+      const c=el("div","qcard"), im=el("img"); im.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(Pc.svg); im.alt="练习图片"; im.style.width="100%"; im.style.height="auto"; im.style.borderRadius="12px"; c.appendChild(im);
+      c.appendChild(el("div","qsent",Pc.prompt));
+      if(Pc.hint){ const tp=el("div","tip",Pc.hint); tp.hidden=!shown["thp-tip"]; if(tp.hidden) c.appendChild(btn("卡住了？看线索","tipBtn",()=>{shown["thp-tip"]=true; render();})); c.appendChild(tp); }
+      s.appendChild(c);
+      thinkInput(c,"pic","用 2–3 句英文描述这张图……",Pc.ref,Pc.note,false,"Look at a picture and describe it. "+Pc.prompt+"\n\nYou can't see the picture. Here is an accurate sample answer for it: \""+Pc.ref+"\". Use it to know what the picture shows. Her answer can take a different angle or wording and still be right if it does the task and fits the picture; only point out details that clearly contradict the sample (a wrong object, place or action).");
+    }
+  }
+  // 7. news
+  function renderNews(p,d){
+    p.appendChild(el("h2",null,"简讯"));
+    const ul=el("ul","news");
+    d.lesson.news.forEach(n=>{const li=el("li"); li.appendChild(el("strong",null,n.headline)); const meta=el("span","note"); meta.appendChild(document.createTextNode((n.zh||"")+" · ")); if(n.url&&/^https:\/\//.test(n.url)){const a=el("a",null,n.source||"来源"); a.href=n.url; a.target="_blank"; a.rel="noopener"; meta.appendChild(a);} li.appendChild(meta); if(n.why) li.appendChild(el("div","why zh",n.why)); ul.appendChild(li);});
+    p.appendChild(ul);
+  }
+
+  async function saveField(obj,okMsg){
+    const c=cur(); if(!c||!db) return false;
+    try{ await db.doc("days/"+c.id).update(obj); if(okMsg) $("gNote").textContent=okMsg; return true; }
+    catch(e){ $("gNote").textContent="没能保存，请检查网络后再试。"; return false; }
+  }
+  // save a card's result + what she typed as soon as it is checked, so going back never loses it
+  function saveResult(key,val,extra){ const upd={results:{[key]:val}}; if(extra) upd.typed={[key]:extra}; return saveField(upd); }
+  async function mark(key,val,extra){
+    const c=cur(); if(!c||!db) return;
+    idx++; revealed=false;
+    const upd={results:{[key]:val}}; if(extra) upd.typed={[key]:extra};
+    const ok=await saveField(upd);
+    if(!ok){ idx--; $("gNote").textContent="没能保存这张卡的结果，请检查网络后再点一次。"; }
+    render();
+  }
+  $("prevBtn").onclick=()=>{ if(step>0){step--; render(); scrollTop();} };
+  $("nextBtn").onclick=async()=>{
+    const c=cur(); if(!c) return; const st=stepsFor(c.data), s=st[step];
+    if(s.id==="write"){ const ta=document.getElementById("writing-"+c.id); if(ta && ta.value.trim()!==(c.data.writing||"")) await saveField({writing:ta.value.trim()}); }
+    const last=step>=st.length-1;
+    await saveField({done:last?{[s.id]:true,all:true}:{[s.id]:true}});
+    if(!last){ step++; render(); scrollTop(); }
+    else { render(); $("gNote").textContent="今天的学习全部完成 🎉 明天见！"; }
+  };
+
+  // ---- 表达库 view: reads bank/phrases and bank/usage from the same database ----
+  let bank=null, usage=null, bankOpen=false, bankTab="due", bankQ="";
+  const shDate=()=>new Date(Date.now()+8*36e5).toISOString().slice(0,10);
+  const dayDiff=(a,b)=>Math.round((new Date(a+"T00:00:00Z")-new Date(b+"T00:00:00Z"))/864e5);
+  function dueText(due,t){ if(!due) return ""; if(due==="已掌握") return "已掌握"; const n=dayDiff(due,t); if(n<0) return "已过期 "+(-n)+" 天"; if(n===0) return "今天到期"; return due.slice(5)+" · "+n+" 天后"; }
+  function bankItem(r,t,mastered){
+    const box=el("div","bk"); box.appendChild(el("div","bkc",r.chunk));
+    if(r.zh) box.appendChild(el("div","bkz",r.zh));
+    if(r.ex) box.appendChild(el("div","bke",r.ex));
+    const m=el("div","bkm");
+    if(mastered) m.textContent="掌握于 "+r.mastered;
+    else { m.textContent="复习 "+r.level+" 次 · "+dueText(r.due,t)+(r.scene?" · "+r.scene:""); if(r.due<=t) box.classList.add("bkdue"); }
+    box.appendChild(m); return box;
+  }
+  function usageItem(r,t){
+    const box=el("div","bk"); box.appendChild(el("div","bkc",r.group));
+    const T={rule:"语法规则",register:"语气差别",choice:"选词"};
+    if(r.rule) box.appendChild(el("div","bkz",(T[r.type]?T[r.type]+"：":"")+r.rule));
+    if(r.myCase) box.appendChild(el("div","bkz","你的场合："+r.myCase));
+    if(r.ex) box.appendChild(el("div","bke",r.ex));
+    box.appendChild(el("div","bkm","阶段 "+r.stage+" · "+dueText(r.due,t)));
+    if(r.due!=="已掌握"&&r.due<=t) box.classList.add("bkdue");
+    return box;
+  }
+  function renderBank(){
+    const v=$("bankView"); v.textContent="";
+    if(!bank&&!usage){ v.appendChild(el("div","note","正在读取表达库……")); return; }
+    const t=shDate(), rows=(bank&&bank.rows)||[], mast=(bank&&bank.mastered)||[], urows=(usage&&usage.rows)||[];
+    const byDue=(a,b)=>a.due<b.due?-1:a.due>b.due?1:0;
+    const dueRows=rows.filter(r=>r.due<=t).sort(byDue);
+    const tabs=[["due","今天到期 "+dueRows.length],["all","全部 "+rows.length],["mast","已掌握 "+mast.length],["use","答疑本 "+urows.length]];
+    const bar=el("div","bkt");
+    tabs.forEach(x=>{ const b=btn(x[1],"day",()=>{ bankTab=x[0]; renderBank(); }); b.setAttribute("aria-pressed",String(bankTab===x[0])); bar.appendChild(b); });
+    v.appendChild(bar);
+    const q=document.createElement("input"); q.type="search"; q.className="bkq"; q.placeholder="搜索表达、中文或例句"; q.value=bankQ; v.appendChild(q);
+    const list=el("div","bkl"); v.appendChild(list);
+    function renderList(){
+      list.textContent=""; const s=bankQ.trim().toLowerCase();
+      const hit=r=>!s||[r.chunk,r.group,r.zh,r.ex,r.rule].some(x=>String(x||"").toLowerCase().indexOf(s)>=0);
+      let items;
+      if(bankTab==="due") items=dueRows.filter(hit).map(r=>bankItem(r,t,false));
+      else if(bankTab==="all") items=rows.slice().sort(byDue).filter(hit).map(r=>bankItem(r,t,false));
+      else if(bankTab==="mast") items=mast.filter(hit).map(r=>bankItem(r,t,true));
+      else items=urows.filter(hit).map(r=>usageItem(r,t));
+      if(!items.length) list.appendChild(el("div","note","没有内容"));
+      items.forEach(i=>list.appendChild(i));
+    }
+    q.oninput=()=>{ bankQ=q.value; renderList(); };
+    renderList();
+  }
+  function bankRefresh(){ if(!bankOpen) return; const a=document.activeElement; if(a&&a.className==="bkq") return; renderBank(); }
+  function closeBank(skipRender){
+    bankOpen=false; $("bankView").hidden=true; $("bankBtn").textContent="表达库";
+    if(!skipRender) render();
+  }
+  function openBank(){
+    bankOpen=true; ["empty","steps","panel","nav"].forEach(i=>$(i).hidden=true);
+    $("bankView").hidden=false; $("bankBtn").textContent="返回今天"; renderBank(); scrollTop();
+  }
+  $("bankBtn").onclick=()=>{ if(bankOpen) closeBank(); else openBank(); };
+  function startBank(){
+    try{
+      db.doc("bank/phrases").onSnapshot(s=>{ bank=s.exists?s.data():null; bankRefresh(); },()=>{});
+      db.doc("bank/usage").onSnapshot(s=>{ usage=s.exists?s.data():null; bankRefresh(); },()=>{});
+    }catch(e){}
+  }
+
+  claude.use("db").then(d=>{
+    db=d;
+    if(db) startBank();
+
+    if(!db){ $("empty").textContent="需要登录 claude.ai 才能看到今天的学习内容。"; return; }
+    db.collection("days").orderBy("date","desc").limit(7).onSnapshot(snap=>{
+      const first=curId===null;
+      days=snap.docs.map(x=>({id:x.id,data:x.data()||{}}));
+      if(!days.length){ $("empty").textContent="还没有内容。每天早上 8 点简报发出后，这里会按顺序出现当天的复习和练习。"; render(); return; }
+      if(first){ selectDay(days[0].id); return; }
+      const a=document.activeElement; if(a && a.tagName==="TEXTAREA") return; // don't wipe typing
+      render();
+    },()=>{ $("empty").textContent="暂时连不上学习数据，请刷新页面。"; });
+  });
+})();
+</script>
+
+</body></html>
