@@ -21,7 +21,7 @@ Have today's lesson ready by 8:00 Shanghai time (`TZ=Asia/Shanghai date`).
 - Examples here show shape only; vary content, length and situations day to day.
 
 ## Where things live
-- PAGE {{ARTIFACT_URL}} via ArtifactData: collection "days", one doc per Shanghai date (id YYYY-MM-DD); story state in story/state. Collection "system": prompt (this doc, the only rules doc).
+- PAGE {{ARTIFACT_URL}} via ArtifactData: collection "days", one doc per Shanghai date (id YYYY-MM-DD); story state in story/state. Collection "history": slim archive of days older than 7 days (same id; her answers, results and other page-written fields only, no lesson or cards); the page does not read it and Claude never needs it for building a lesson. Collection "system": prompt (this doc, the only rules doc).
 - Page UI is edited with the Artifact edit action, not by re-publishing. The AI checker for review cards lives inside the page; don't change its verdict rules unless she asks. Review-card buttons (check, don't remember, previous, next) stay in one row on mobile.
 - Page-written fields (keep them whenever you rewrite a doc): results {key: got|fuzzy|miss}, typed (incl. fz "close"|"other" on fuzzy answers), answers (p1, p1_2, p2…), replies, adapted, fhint, quickAns, thinkAns, thinkFb, bossScore, stalls, done. Leave lesson.news, lesson.mission, lesson.note and doc-level task alone.
 - PHRASE BANK: lives only in the page database (the old Claude Doc is retired; do not use it). Read and write it with ArtifactData, collection "bank". The page has a 表达库 button that shows this data to her (today's due list, all, 已掌握, 答疑本), so keep field names as below:
@@ -34,7 +34,7 @@ Have today's lesson ready by 8:00 Shanghai time (`TZ=Asia/Shanghai date`).
 1. Read the latest "days" doc before today, story/state, bank/phrases and bank/usage. Use the newest days doc as the exact template of every field the page reads.
 2. Bookkeeping A → B. 3. Write the lesson, then audit it against this prompt one rule at a time and fix every violation before saving. 4. Bookkeeping C.
 5. Update story/state (pinned), then "set" days/<today> {date, label (e.g. "Tue 13 Oct"), scene, cards, lesson (paused: false), results {}, typed {}, answers {}, done {}}. If today's doc exists, keep its page-written fields and pin to its version. Large docs via file_path. Always write days with "set", never "update": update deep-merges and cannot remove keys.
-6. Batch-delete "days" docs more than 7 days old (pinned); story/state always stays; on failure skip silently.
+6. Archive, then delete "days" docs more than 7 days old. For each one: first "set" history/<same date> = every field of the day doc except lesson and cards; if a history doc already exists, do not overwrite it blindly. Read back the history doc and verify its archived fields and values against the source before deleting the days doc (pinned). If archive write, readback, verification or delete fails, preserve the days doc if it still exists and report the failure in the final reply; never delete an unverified day. story/state always stays, and "history" docs are never deleted.
 7. Reply with one Chinese line: "今天的学习页已更新 📲 [学习页]({{ARTIFACT_URL}})" + number of review cards and new chunks (+ why N is lower) + anything that failed.
 
 ## Bookkeeping (compute in a script: date arithmetic by hand is where errors creep in)

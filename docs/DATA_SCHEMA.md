@@ -20,6 +20,9 @@
 故事和出课的长期状态，种子见 `seed/story-state.json`。主要键：`episode`、`pending`、`log`、`nextHook`、`standing`、`portfolio`、`focusPool/focusLog`、`topicLog`、`drillLog`、`usedClips`、`listenLast`、`teacherNotes`（后来的纠正，优先于说明书）、`voiceBoiler`、`drillBoiler`、`weeklyTopic`。
 - 注意：键名 `jade`（学习者简介）沿用原版命名，说明书里引用的就是这个键。
 
+## `history/YYYY-MM-DD`（旧课的瘦身存档）
+超过 7 天的 `days` 文档，在删除前先把**除 `lesson`、`cards` 以外的所有字段**（日期、场景、`results`、`typed`、`answers`、`done` 及其他页面写入的字段）写到这里，写成功后才删原文档。页面不读这个集合，永不自动删除。按原作者的真实数据估算，一份约 0.1–11 KB（对比整份 24–33 KB）。
+
 ## `days/YYYY-MM-DD`（每天一份）
 出课时写入：`date, label, scene, cards[], lesson{…}, results{}, typed{}, answers{}, done{}`。
 页面写入（重写当天文档时必须保留）：`results`（`got|fuzzy|miss`）、`typed`、`answers`、`replies`、`adapted`、`fhint`、`quickAns`、`thinkAns`、`thinkFb`、`bossScore`、`stalls`、`done`。

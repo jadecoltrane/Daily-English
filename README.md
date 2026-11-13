@@ -29,7 +29,7 @@
 3. **填写并导入数据**：
    - 填好 `prompt/system-prompt.template.md` 里的 `{{LEARNER}}`、`{{LEARNER_PROFILE}}`、`{{ARTIFACT_URL}}`（第 2 步得到的链接）。
    - 填好 `seed/story-state.json` 里所有 `{{FILL…}}`（公司、故事计划、你的真实作品和角色等）。
-   - 让 Claude 用数据库写入功能写入：`system/prompt`、`bank/phrases`、`bank/usage`、`bank/rules`、`story/state`。
+   - 让 Claude 用数据库写入功能写入：`system/prompt`、`bank/phrases`、`bank/usage`、`bank/rules`、`story/state`。`history/` 不用预先创建，超过 7 天的旧课会按说明书第 6 步归档后再清理。
      文档位置和字段见 `docs/DATA_SCHEMA.md`。
 4. **每天出课**：每天对 Claude 说"按 system/prompt 出今天的课。页面：<你的链接>"。它会读前一天结果、结算复习、写入当天的课。
 5. **检查**：把数据库导出成 JSON，运行 `python tools/validate.py <导出文件夹>`。
@@ -71,3 +71,10 @@
 - 没有添加许可证；请在决定公开使用前选择。
 
 **注意：**这些是静态构建修正，并不代表已完成实际账号里的发布、数据库权限或完整出课流程验证。
+
+## 新增：旧课答题记录存档（2026-11-13）
+
+- 出课规则增加 `history/YYYY-MM-DD`：超过 7 天的旧 `days` 文档在清理之前，先写入除 `lesson`、`cards` 以外的字段（答题、批改与完成记录等）。
+- 归档存在或写入成功不等于数据已核对：删除前要核对归档内容与源文档一致；失败保留旧课并报告。
+- `history` 不在日常出课的默认读取范围，以减少重复数据读取；这并不是备份整个数据库。
+- **注意：此更新仍使用 ArtifactData，不代表完成了 GitHub 数据层迁移或页面实际测试。**
