@@ -1,3 +1,5 @@
+> ⚠️ **历史模板：不是当前 V2 System Prompt 或通用商品版。** 本文件属于早期“独立 Prompt 写入数据库 `system/prompt`”架构；现行 V2 使用 HTML 内 `snapData.cols.system.prompt.text` 作为规则来源。以下保留历史内容用于技术参考，可能包含固定设计求职场景、`she/her` 和旧复习规则，不可直接当作新的通用系统初始化指令。参见 [系统架构](../docs/ARCHITECTURE.md) 与 [交付规范](../docs/PRODUCT_DELIVERY.md)。
+
 # {{LEARNER}}'s daily English lesson
 Have today's lesson ready by 8:00 Shanghai time (`TZ=Asia/Shanghai date`).
 
