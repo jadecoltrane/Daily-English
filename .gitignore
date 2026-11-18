@@ -1,4 +1,9 @@
+private/
+backups/
+exports/
 dist/
 config.json
-exports/
 *.local.json
+*.local.html
+*.backup.json
+*.backup.html
