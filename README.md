@@ -54,7 +54,7 @@ Daily English 是为 Claude Artifacts 设计的一套英语学习系统。用户
 
 当前仓库保留早期研究模板，方便理解技术原理，但公开代码不代表最终交付物，也不代表所有旧模板功能已被修复。**请勿把旧模板打包冒充完整商业版。**
 
-有关计划的安装、数据备份、升级和验收边界，参见 [交付规范](docs/PRODUCT_DELIVERY.md)。
+有关计划的安装、数据备份、升级和验收边界，参见 [用户使用指南（草案）](docs/USER_GUIDE.md)、[交付规范](docs/PRODUCT_DELIVERY.md) 及 [待验证问题](docs/KNOWN_ISSUES.md)。
 
 ## 日常使用方式（适用于完成安装的版本）
 
@@ -84,6 +84,7 @@ Daily English 是为 Claude Artifacts 设计的一套英语学习系统。用户
 | [`docs/KNOWN_ISSUES.md`](docs/KNOWN_ISSUES.md) | 历史审计，所述问题不等于已全部修复 |
 | [`docs/example-day.json`](docs/example-day.json) | 示例课程数据 |
 | [`docs/PRODUCT_DELIVERY.md`](docs/PRODUCT_DELIVERY.md) | 新版产品交付原则和验收清单 |
+| [`docs/USER_GUIDE.md`](docs/USER_GUIDE.md) | 准备给买家的操作说明（草案，非已验收功能） |
 
 如需研究旧版模板，请注意：旧方案要求 `system/prompt` 数据库文档、`config.json` 和 Python 构建；**V2 的规则权威来源已改为 HTML 内的 `snapData`**。不要将这两种架构混用。
 
