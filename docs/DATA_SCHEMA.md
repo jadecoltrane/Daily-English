@@ -1,31 +1,38 @@
-# 数据结构（均为数据库文档，"集合/文档 id"）
+# Daily English 数据结构与兼容性说明
 
-字段名被页面读取，改名会让页面失效。
+**本文件描述目标 V2 的数据归属。** 公开仓库当前包含的 `seed/` 是旧模板，字段名和默认值可能过时；不能把它们直接导入真实用户的数据库。最终字段以实际发布的 HTML、内嵌脚本及运行时数据库为准。
 
-## `system/prompt`
-`{note, text}`：规则说明书全文（模板见 `prompt/`）。
+## 数据存放原则
 
-## `bank/phrases`
-`{note, rows: [{date, scene, chunk, zh, ex, level, due}], mastered: [{chunk, zh, ex, mastered}]}`
-- `level` = 复习次数（0–3；4 = 移入 mastered），`due` = 下次复习（YYYY-MM-DD），新行放最前面。
+| 位置 | 内容 | 规则 |
+| --- | --- | --- |
+| HTML：`snapData.cols.system.prompt.text` | 生成每日课程的完整 Prompt | V2 的权威规则，**不再写进数据库的 `system/prompt`** |
+| HTML：`snapData.cols.system.tools.files` | `prepare.js`、`finalize.js`、`scheduler.js` | 出课准备、结算和校验 |
+| HTML：`snapData.cols.system.appendix` / `followups` | 数据字段说明和课后问答规则 | 随 HTML 发布 |
+| HTML：`snapData.cols.system.thinkingRules` | 初始英语思维规律参考 | 供新用户初始化参考；不是封闭批改标准 |
+| 数据库：`story/state` | 称呼、目标、英语水平、场景偏好、真实经历、故事状态 | 仅数据库缺失时首次初始化，不能因升级覆盖 |
+| 数据库：`bank/phrases` | `rows`、`mastered` | 表达及其间隔复习进度 |
+| 数据库：`bank/usage` | `rows` | 答疑本 |
+| 数据库：`bank/rules` | `rows: [{n,rule,ex}]` | 旧版兼容；已有用户不能自动清空 |
+| 数据库：`days/YYYY-MM-DD` | 当天课程、回答、批改、完成标记 | 一天一文档 |
+| 数据库：`history/YYYY-MM-DD` | 旧课归档 | 不等于完整数据备份 |
 
-## `bank/usage`（答疑本）
-`{note, rows: [{date, group, type, rule, myCase, ex, source, stage, due, lastRight, lastWrong}]}`
-- `stage`：`"1"`、`"1 对比"`、`"2"`、`"3"`；`due` 为日期或 `"已掌握"`。
+### 核心字段约定
 
-## `bank/rules`
-`{note, rows: [{n, rule, ex}]}`：英语思维规律，只读，批改时用编号引用。
+- `bank/phrases.rows`：`{date, scene, chunk, zh, ex, level, due}`；`mastered` 为 `{chunk, zh, ex, mastered}`。
+- `bank/usage.rows`：`{date, group, type, rule, myCase, ex, source, stage, due, lastRight, lastWrong}`。
+- `story/state`：现有 V2 兼容字段含 `name`、`jade`（**历史字段名，不代表学习者必须是 Jade**）、`scenes`、`portfolio`、`company`、`characters`、`arc`、`episode`、`log`、`pending`、`nextHook`、`standing`、`drillLog`、`focusLog`、`usedClips` 等。重命名字段前必须逐一校验依赖脚本。
+- `days/` 中页面写入的 `results`、`typed`、`answers`、`replies`、`adapted`、`thinkAns`、`thinkFb`、`quickAns`、`bossScore`、`done` 等，重出课时必须保留。
+- 旧课只应在确认归档成功且策略允许后删除。完整备份需要导出**全部**集合/文档，不是最近七天页面列表。
 
-## `story/state`
-故事和出课的长期状态，种子见 `seed/story-state.json`。主要键：`episode`、`pending`、`log`、`nextHook`、`standing`、`portfolio`、`focusPool/focusLog`、`topicLog`、`drillLog`、`usedClips`、`listenLast`、`teacherNotes`（后来的纠正，优先于说明书）、`voiceBoiler`、`drillBoiler`、`weeklyTopic`。
-- 注意：键名 `jade`（学习者简介）沿用原版命名，说明书里引用的就是这个键。
+### 更新规则
 
-## `history/YYYY-MM-DD`（旧课的瘦身存档）
-超过 7 天的 `days` 文档，在删除前先把**除 `lesson`、`cards` 以外的所有字段**（日期、场景、`results`、`typed`、`answers`、`done` 及其他页面写入的字段）写到这里，写成功后才删原文档。页面不读这个集合，永不自动删除。按原作者的真实数据估算，一份约 0.1–11 KB（对比整份 24–33 KB）。
+修改 Prompt 或 HTML 不意味着自动修改数据库。已有用户应继续读取原来的 `story/state` 与 `bank`；仅新用户空库时运行初始化。**不要把新用户的空 `seed` 文件覆盖到已有学习记录上。**
 
-## `days/YYYY-MM-DD`（每天一份）
-出课时写入：`date, label, scene, cards[], lesson{…}, results{}, typed{}, answers{}, done{}`。
-页面写入（重写当天文档时必须保留）：`results`（`got|fuzzy|miss`）、`typed`、`answers`、`replies`、`adapted`、`fhint`、`quickAns`、`thinkAns`、`thinkFb`、`bossScore`、`stalls`、`done`。
-- `cards[]`：`{key, chunk, level, stage(gap|use|choice), prompt, hint, answer, example, why?}`；答疑本卡另有 `kind:"usage", step, form, rule, rows[], myCase`。
-- `lesson` 包含：`chunks, quick, situation, story, dialogue, practice, fix, listen, talk, think, voice, paused`。
-- 完整的字段示例：`docs/example-day.json`。
+复习次数和到期日期是学习状态，不应该在未作答时提前增加。AI 批改必须接受语境中自然的变体，不得因与示例答案不同而机械扣错。
+
+### 与旧模板的区别
+
+本仓库旧版 `prompt/system-prompt.template.md` 写明 `system/prompt` 是规则文档，那是**历史架构**。V2 的规则在 HTML 中 `snapData`；不能照旧 README 的操作把新版系统误配置成需要数据库规则。
+
+参见 [架构](ARCHITECTURE.md) 与 [产品交付规范](PRODUCT_DELIVERY.md)。
