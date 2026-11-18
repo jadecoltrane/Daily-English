@@ -1,4 +1,4 @@
-# Daily English：V2 架构与旧模板区别
+# Daily English：V2 系统架构
 
 ## 当前目标架构（V2）
 
@@ -46,11 +46,9 @@
 - HTML 不等于学习数据的备份。使用具有权限的 Claude 数据库工具只读导出全部 `story`、`bank`、`days`、`history` 等实际存在的集合，保留文档 ID、日期、字段，下载到 Claude 之外。
 - 数据恢复是单独的写回与核验操作；尚未完成的恢复不得宣称成功。
 
-## GitHub 中的历史模板不是 V2
+## 公开仓库与实际产品的边界
 
-本仓库 `app/index.template.html` 和 `prompt/system-prompt.template.md` 是更早的**独立 Prompt 模板架构**：`system/prompt` 保存在数据库，`config.json` 通过 Python 注入学习者信息。此方案和 V2 的 `snapData` 方案不同；历史模板**未被自动迁移为通用商品**。
-
-因此：不要同时告诉 Claude “从数据库的 system/prompt 出课”与“从页面 snapData 出课”。不同版本应以实际 HTML 为准。
+本仓库已删除旧版 HTML 模板、独立 Prompt、旧构建工具和种子数据，仅保留 V2 产品说明和交付规范。当前不提供完整的商品 HTML。V2 以页面内 `snapData` 为规则来源，**不要再使用早期的数据库 `system/prompt` 规则路径**；该路径仅用于理解历史兼容性。
 
 ## 验收边界
 
