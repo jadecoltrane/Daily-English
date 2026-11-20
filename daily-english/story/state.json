@@ -1,0 +1,52 @@
+{
+  "name": "jade",
+  "tz": "Asia/Shanghai",
+  "profile": {
+    "name": "jade",
+    "level": "beginner (A1–A2)",
+    "levelNote": "",
+    "goal": "speak naturally in everyday life",
+    "goalDetail": "",
+    "minutesPerDay": 15,
+    "scenes": [
+      "日常生活"
+    ],
+    "background": "",
+    "schema": 2,
+    "createdAt": "2026-11-20T10:32:37.145Z"
+  },
+  "jade": "jade is a Chinese-speaking learner of English, level beginner (A1–A2). Goal: speak naturally in everyday life. Studies about 15 minutes a day and wants to practise: daily life. No additional personal background was provided; do not infer personal details.",
+  "scenes": {
+    "1": "日常生活",
+    "2": "日常生活",
+    "3": "日常生活",
+    "4": "日常生活",
+    "5": "日常生活"
+  },
+  "portfolio": [],
+  "company": "",
+  "characters": {},
+  "arc": "",
+  "act": 1,
+  "episode": 0,
+  "log": [],
+  "nextHook": "",
+  "standing": {
+    "round": "",
+    "signals": [],
+    "concerns": [],
+    "chances": []
+  },
+  "bossScores": [],
+  "usedClips": [],
+  "topicLog": [],
+  "drillLog": [],
+  "focusLog": [],
+  "runLog": [],
+  "teacherNotes": [],
+  "evalCases": [],
+  "discarded": [],
+  "drillBoiler": "",
+  "voiceBoiler": "",
+  "note": ""
+}
