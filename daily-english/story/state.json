@@ -38,15 +38,49 @@
     "chances": []
   },
   "bossScores": [],
-  "usedClips": [],
-  "topicLog": [],
+  "usedClips": [
+    "https://www.youtube.com/watch?v=dB5o1Ms6CAk"
+  ],
+  "topicLog": [
+    "What is one thing you usually pick up on your way home from work or school? (2026-11-20)"
+  ],
   "drillLog": [],
-  "focusLog": [],
-  "runLog": [],
+  "focusLog": [
+    {
+      "date": "2026-11-20",
+      "focus": "先说结论，原因放后面，重点放最后"
+    }
+  ],
+  "runLog": [
+    {
+      "date": "2026-11-20",
+      "episodeAction": "first",
+      "N": 2,
+      "due": 0,
+      "cards": 0,
+      "deleted": 0,
+      "reset": 0,
+      "listen": "new"
+    }
+  ],
   "teacherNotes": [],
   "evalCases": [],
   "discarded": [],
   "drillBoiler": "",
   "voiceBoiler": "",
-  "note": ""
+  "note": "",
+  "listenLast": {
+    "title": "Do you like cleaning? (Real Easy English)",
+    "length": "6 分钟",
+    "url": "https://www.youtube.com/watch?v=dB5o1Ms6CAk",
+    "zh": "这段对话视频通过 Phil 和 Georgie 轻松地谈论家务，展示了扫地、拖地等日常清洁的地道英语表达。内容专为 A2 级别的学习者设计，语速自然且贴近生活。",
+    "pass": 1,
+    "source": "BBC Learning English"
+  },
+  "pending": {
+    "date": "2026-11-20",
+    "episode": 1,
+    "title": "A Quick Errand",
+    "summary": "You're heading home and Sam asks you to pick up some milk. You learn how to describe your commute and quick shopping."
+  }
 }
