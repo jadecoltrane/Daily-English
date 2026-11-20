@@ -1,5 +1,24 @@
 {
-  "rows": [],
+  "rows": [
+    {
+      "date": "2026-11-20",
+      "scene": "Ending the workday",
+      "chunk": "pick up some milk",
+      "zh": "顺便买点牛奶",
+      "ex": "Can you pick up some milk at the store?",
+      "level": 0,
+      "due": "2026-11-21"
+    },
+    {
+      "date": "2026-11-20",
+      "scene": "Ending the workday",
+      "chunk": "on my way home",
+      "zh": "在回家的路上",
+      "ex": "I'll call you on my way home.",
+      "level": 0,
+      "due": "2026-11-21"
+    }
+  ],
   "mastered": [],
   "note": ""
 }
