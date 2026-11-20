@@ -1,0 +1,187 @@
+{
+  "answers": {},
+  "cards": [],
+  "date": "2026-11-20",
+  "done": {},
+  "label": "Fri 20 Nov",
+  "lesson": {
+    "chunks": [
+      {
+        "chunk": "pick up some milk",
+        "meaning": "buy milk quickly on the way somewhere",
+        "zh": "顺便买点牛奶",
+        "example": "Can you pick up some milk at the store?",
+        "why": "Pick up 比 buy 听起来更随意，表示顺手、顺路去买。"
+      },
+      {
+        "chunk": "on my way home",
+        "meaning": "while traveling back to one's house",
+        "zh": "在回家的路上",
+        "example": "I'll call you on my way home.",
+        "why": "这是一个极高频的方位表达，表示正在回家的状态或路程中。"
+      }
+    ],
+    "quick": [
+      {
+        "chunk": "pick up some milk",
+        "prompt": "I need to ____ some milk for the coffee.",
+        "answer": "pick (pick up some milk)"
+      },
+      {
+        "chunk": "on my way home",
+        "prompt": "I am ____ home now, see you in ten minutes.",
+        "answer": "on (on my way home)"
+      }
+    ],
+    "situation": "You are packing your bag at the office when your roommate calls you.",
+    "story": {
+      "episode": 1,
+      "title": "The Grocery Run",
+      "recap": "It's your first lesson! You are heading home after a busy day.",
+      "teaser": "Will you remember to get what's missing for tomorrow's breakfast?"
+    },
+    "dialogue": [
+      {
+        "narr": "Your phone vibrates on the desk. It's Sam."
+      },
+      {
+        "who": "Sam",
+        "line": "Hey! Are you still at the office?"
+      },
+      {
+        "who": "jade",
+        "line": "I'm just leaving. I'm **on my way home** now. What's up?"
+      },
+      {
+        "who": "Sam",
+        "line": "We're out of milk. Could you get some?"
+      },
+      {
+        "who": "jade",
+        "line": "Sure thing. I'll **pick up some milk** at the corner shop."
+      },
+      {
+        "who": "Sam",
+        "line": "Great, see you soon!"
+      },
+      {
+        "narr": "You grab your keys and head for the elevator, making a mental note to stop at the shop."
+      }
+    ],
+    "practice": [
+      {
+        "scene": "You arrive at the corner shop and see your favorite snacks.",
+        "who": "Shop Assistant",
+        "cue": "Hello! Anything else for you today?",
+        "task": "Confirm that you just need the milk today.",
+        "hint": "No · just · milk",
+        "reference": "No thanks, I just need to pick up some milk today."
+      },
+      {
+        "scene": "You are at the checkout counter.",
+        "who": "Shop Assistant",
+        "cue": "That's $4.50. Would you like a bag?",
+        "task": "Decline the bag since you are heading home directly.",
+        "hint": "No · on · my · way",
+        "reference": "No, I'm fine. I'm on my way home anyway."
+      }
+    ],
+    "fix": {
+      "from": "",
+      "items": []
+    },
+    "listen": {
+      "title": "Do you like cleaning? (Real Easy English)",
+      "source": "BBC Learning English",
+      "length": "6 分钟",
+      "url": "https://www.youtube.com/watch?v=dB5o1Ms6CAk",
+      "zh": "这段对话视频通过 Phil 和 Georgie 轻松地谈论家务，展示了扫地、拖地等日常清洁的地道英语表达。内容专为 A2 级别的学习者设计，语速自然且贴近生活。",
+      "focus": [
+        "What chore does Phil say he is most likely to put off?",
+        "Which cleaning tools (verbs or nouns) do the speakers mention?"
+      ]
+    },
+    "talk": {
+      "topic": "What is one thing you usually pick up on your way home from work or school?"
+    },
+    "think": {
+      "focus": "先说结论，原因放后面，重点放最后",
+      "tip": "英语口语中习惯先直接回答对方的问题（Yes/No/结论），再补充细节。这能让交流更直接、更自然。",
+      "extra": {
+        "kind": "around",
+        "thing": "Coming home from the gym",
+        "prompt": "A friend asks where you are. Tell them you are returning from the gym.",
+        "hint": "在回家的路上",
+        "word": "way",
+        "ref": "I'm on my way home from the gym.",
+        "note": "可以根据地点灵活添加 'from ...' 来增加信息量。"
+      },
+      "quick": {
+        "prompt": "Sam asks: 'Can you buy milk?' You reply: 'Yes, I'll get it on the way back.'",
+        "hint": "结论先行",
+        "ref": "Yes, I can pick up some milk on my way home.",
+        "note": "先说 Yes，再说怎么买。"
+      }
+    },
+    "voice": {
+      "who": "Sam · 你的室友",
+      "scene": "室友打来电话，询问你回家的进度并请你帮忙买东西。",
+      "goals": [
+        "告诉室友你正在回家的路上",
+        "答应帮室友买点牛奶"
+      ],
+      "chunks": [
+        "on my way home",
+        "pick up some milk"
+      ],
+      "prompt": "Let's practice a quick phone call. Your roommate Sam is calling you as you leave work.\n\nStart the conversation when I say \"Start\".\n\nRules: Speak simple, natural English in short turns of one to three sentences. Wait for me after each turn. If I make a small mistake, repeat my idea back in correct, natural English inside your reply and keep going. Stop to correct me only if the mistake changes the meaning or keeps repeating. If I say \"Help\" or speak Chinese, give me the English I need and let me try again. Do not use the phrases below yourself before I do, but make chances for me to use them: on my way home; pick up some milk\n\nAfter about 10 turns, end the role-play kindly. Then give me: 1) the two or three most useful corrections, 2) three sentences of mine that could sound more natural, with your version, 3) which of the phrases above I did not use. Now just reply \"Ready\" and wait for me to say \"Start\"."
+    },
+    "paused": false
+  },
+  "redrill": {
+    "kind": "fallback",
+    "items": [
+      {
+        "label": "Daily Errand",
+        "prompt": "Tell someone you need to buy some milk.",
+        "ref": "I need to pick up some milk.",
+        "note": "Use 'pick up' for quick shopping."
+      },
+      {
+        "label": "Coming back",
+        "prompt": "Tell someone you are currently traveling back to your house.",
+        "ref": "I'm on my way home.",
+        "note": "A very common phrase for location."
+      },
+      {
+        "label": "Combined",
+        "prompt": "Say you will buy milk while traveling home.",
+        "ref": "I'll pick up some milk on my way home.",
+        "note": "Combine both goals into one sentence."
+      }
+    ],
+    "around": {
+      "facts": "Jade is leaving the office. Sam is at home.",
+      "cue": "Sam: Hey, we are out of milk for breakfast.",
+      "goal": "Tell Sam you'll get it while coming back.",
+      "keys": "pick up,on my way home",
+      "ref": "No problem! I'll pick up some milk on my way home."
+    }
+  },
+  "results": {},
+  "scene": "Ending the workday",
+  "task": "A quick call with a roommate about groceries.",
+  "typed": {},
+  "studyPlan": {
+    "minutes": 15,
+    "newChunks": 2,
+    "reviewLimit": 8,
+    "longReview": 0,
+    "recommendedSteps": [
+      "review",
+      "story",
+      "think"
+    ],
+    "suggestedDrills": 2
+  }
+}
